@@ -48,12 +48,13 @@ class Brewers extends Component {
     }
   }
 
-  @autobind
+  // @autobind
   _fetchBeerInfo() {
+    console.log(autobind);
     fetch(this.state.barnivoreUrl).then(this._handleFetchBeerInfo, this._handleFetchError);
   }
 
-  @autobind
+  // @autobind
   _handleFetchBeerInfo(response) {
     response.json().then(response => {
       const brewers = response.map(x => x.company);
