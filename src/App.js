@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 
-import './App.less';
 import './App.scss';
-import './App.styl';
 
 import DateRetrieved from './DateRetrieved';
 import Brewers from './Brewers';
