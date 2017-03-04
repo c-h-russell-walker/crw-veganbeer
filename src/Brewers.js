@@ -33,21 +33,20 @@ class Brewers extends Component {
 
   @autobind
   _handleFilter(evt) {
+    // TODO - Filter on other data points maybe??
     this.setState({filterText: this.refs.searchText.value.trim()});
   }
 
   renderBrewers() {
+    let breweries = this.state.brewers;
     if (this.state.filterText.length > 2) {
-      return this.state.brewers
-        .filter(x => new RegExp(this.state.filterText, 'i').test(x.company_name))
-        .map(function(brewer) {
-          return <Brewery key={brewer.id} brewer={brewer} />
-        });
-    } else {
-      return this.state.brewers.map(function(brewer) {
-          return <Brewery key={brewer.id} brewer={brewer} />
-      });
+      breweries = breweries
+        .filter(x => new RegExp(this.state.filterText, 'i').test(x.company_name));
     }
+
+    return breweries.map(function(brewer) {
+        return <Brewery key={brewer.id} brewer={brewer} />
+    });
   }
 
   componentDidMount() {
