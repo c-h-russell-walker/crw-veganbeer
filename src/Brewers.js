@@ -9,23 +9,43 @@ class Brewers extends Component {
     super();
     this.state = {
       barnivoreUrl: 'http://www.barnivore.com/beer.json',
-      brewers: []
+      brewers: [],
+      filterText: ''
     };
   }
 
   render() {
     return (
       <div className="Brewers">
+        <input placeholder="Filter by Brewery"
+               ref="searchText"
+               onChange={this._handleFilter}
+               id="searchText"
+               name="searchText"
+               />
         {this.renderBrewers()}
       </div>
     );
   }
 
+  @autobind
+  _handleFilter(evt) {
+    this.setState({filterText: this.refs.searchText.value.trim()});
+  }
+
   renderBrewers() {
-    // TODO - make an unordered list? - also deal with sorting
-    return this.state.brewers.map(function(brewer) {
-        return <Brewery key={brewer.id} brewer={brewer} />
-    });
+    // TODO - do a better version of debounce here
+    if (this.state.filterText.length > 2) {
+      return this.state.brewers
+        .filter(x => new RegExp(this.state.filterText, 'i').test(x.company_name))
+        .map(function(brewer) {
+          return <Brewery key={brewer.id} brewer={brewer} />
+        });
+    } else {
+      return this.state.brewers.map(function(brewer) {
+          return <Brewery key={brewer.id} brewer={brewer} />
+      });
+    }
   }
 
   componentDidMount() {
@@ -44,17 +64,17 @@ class Brewers extends Component {
         this.setState({ brewers: beerInfo});
       }
     } else {
-      console.error('don\'t want to hit their API at will - TODO');
+      console.warn('don\'t want to hit their API at will - TODO');
     }
   }
 
-  // @autobind
+  @autobind
   _fetchBeerInfo() {
-    console.log(autobind);
-    fetch(this.state.barnivoreUrl).then(this._handleFetchBeerInfo, this._handleFetchError);
+    fetch(this.state.barnivoreUrl)
+      .then(this._handleFetchBeerInfo, this._handleFetchError);
   }
 
-  // @autobind
+  @autobind
   _handleFetchBeerInfo(response) {
     response.json().then(response => {
       const brewers = response.map(x => x.company);
