@@ -31,7 +31,7 @@ class Brewers extends Component {
           <img src={logo} className='app-logo' alt="logo" />
           <p className='loading'>Loading</p>
         </div>
-        {this.renderBrewers()}
+        {this._renderBrewers()}
       </div>
     );
   }
@@ -42,7 +42,7 @@ class Brewers extends Component {
     this.setState({filterText: this.refs.searchText.value.trim()});
   }
 
-  renderBrewers() {
+  _renderBrewers() {
     let breweries = this.state.brewers;
     if (this.state.filterText.length > 2) {
       breweries = breweries

@@ -39,9 +39,18 @@ $yellow: gold; // #FFD700
 
     span {
       margin: 0.5em;
-      .more-info {
+      &.more-info {
         font-size: 0.8em;
+        cursor: pointer;
+        border-bottom: 1px solid #00e;
+        &:hover {
+          color: #00e;
+        }
       }
+    }
+
+    .product {
+      margin-left: 1.5em;
     }
   }
 
