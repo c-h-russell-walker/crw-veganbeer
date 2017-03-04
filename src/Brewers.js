@@ -1,5 +1,7 @@
 import { autobind } from 'core-decorators';
 
+import { debounce } from './helpers/debounce';
+
 import React, { Component } from 'react';
 
 import Brewery from './Brewery'
@@ -12,6 +14,7 @@ class Brewers extends Component {
       brewers: [],
       filterText: ''
     };
+    this._handleFilter = debounce(this._handleFilter);
   }
 
   render() {
@@ -34,7 +37,6 @@ class Brewers extends Component {
   }
 
   renderBrewers() {
-    // TODO - do a better version of debounce here
     if (this.state.filterText.length > 2) {
       return this.state.brewers
         .filter(x => new RegExp(this.state.filterText, 'i').test(x.company_name))
