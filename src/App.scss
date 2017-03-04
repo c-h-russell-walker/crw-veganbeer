@@ -21,6 +21,14 @@ $yellow: gold; // #FFD700
     // TODO - make different color?
   }
 
+  .brewers {
+    #search-text {
+      margin: 1.2em;
+      padding: 0.6em;
+      font-size: 0.8em;
+    }
+  }
+
   .brewery {
     &:nth-child(even) {
       background-color: lightgrey;
