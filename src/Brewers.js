@@ -28,8 +28,8 @@ class Brewers extends Component {
                name="searchText"
                />
         <div className={(this.state.brewers.length ? 'hidden' : '')}>
-          <p className='loading'>Loading</p>
           <img src={logo} className='app-logo' alt="logo" />
+          <p className='loading'>Loading</p>
         </div>
         {this.renderBrewers()}
       </div>

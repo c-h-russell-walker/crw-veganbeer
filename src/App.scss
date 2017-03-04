@@ -6,7 +6,7 @@ $yellow: gold; // #FFD700
 .app {
   &-header {
     background-color: #222;
-    padding: 20px;
+    padding: 2em;
     color: white;
     text-align: center;
     a {
@@ -34,11 +34,11 @@ $yellow: gold; // #FFD700
       background-color: lightgrey;
     }
 
-    padding: 5px;
+    padding: 0.5em;
     width: auto;
 
     span {
-      margin: 5px;
+      margin: 0.5em;
       .more-info {
         font-size: 0.8em;
       }
@@ -47,7 +47,7 @@ $yellow: gold; // #FFD700
 
   .circle:before {
     content: ' \25CF';
-    font-size: 20px;
+    font-size: 1.25em;
   }
 
   .green {
@@ -66,14 +66,27 @@ $yellow: gold; // #FFD700
     display: none;
   }
 
-  .loading:after {
-    overflow: hidden;
-    display: inline-block;
-    vertical-align: bottom;
-    -webkit-animation: ellipsis steps(4, end) 1500ms infinite;
-    animation: ellipsis steps(4, end) 1500ms infinite;
-    content: "\2026"; /* ascii code for the ellipsis character */
-    width: 0px;
+  &-logo {
+    animation: app-logo-spin infinite 20s linear;
+    height: 5em;
+  }
+
+  @keyframes app-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .loading {
+    margin-left: 1.2em;
+    &:after {
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: bottom;
+      -webkit-animation: ellipsis steps(4, end) 1500ms infinite;
+      animation: ellipsis steps(4, end) 1500ms infinite;
+      content: "\2026"; /* ascii code for the ellipsis character */
+      width: 0;
+    }
   }
 
   @keyframes ellipsis {
