@@ -1,29 +1,83 @@
-.App {
+$react-blue: #61DAFB;
+$green: green;
+$red: red;
+$yellow: gold; // #FFD700
+
+.app {
   &-header {
     background-color: #222;
-    height: 180px;
     padding: 20px;
     color: white;
     text-align: center;
+    a {
+      color: white;
+      &:hover {
+        color: $react-blue;
+      }
+    }
   }
 
-  &-intro {
-    font-size: large;
+  a {
+    // TODO - make different color?
   }
-}
 
-.configs {
-  li {
-    margin: 15px 0px;
+  .brewery {
+    &:nth-child(even) {
+      background-color: lightgrey;
+    }
+
+    padding: 5px;
+    width: auto;
+
+    span {
+      margin: 5px;
+      .more-info {
+        font-size: 0.8em;
+      }
+    }
   }
-}
 
-code {
-  border-radius: 3px;
-  padding: 2px 10px;
-  font-size: 17px;
-  margin-right: 10px;
-  background-color: rgba(222, 222, 222, 0.34);
-  border: 1px solid #cccccc;
-  color: #868686;
+  .circle:before {
+    content: ' \25CF';
+    font-size: 20px;
+  }
+
+  .green {
+    color: $green;
+  }
+
+  .red {
+    color: $red;
+  }
+
+  .yellow {
+    color: $yellow;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .loading:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(4, end) 1500ms infinite;
+    animation: ellipsis steps(4, end) 1500ms infinite;
+    content: "\2026"; /* ascii code for the ellipsis character */
+    width: 0px;
+  }
+
+  @keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
+  @-webkit-keyframes ellipsis {
+    to {
+      width: 1.25em;
+    }
+  }
+
 }

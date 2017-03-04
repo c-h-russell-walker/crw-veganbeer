@@ -4,15 +4,14 @@ class Brewery extends Component {
   render() {
     const brewery = this.props.brewer;
     return (
-      <div className="Brewery">
+      <div className="brewery">
+        <span className={'circle ' + brewery.red_yellow_green.toLowerCase()}></span>
         {/* TODO - Deal with url parsing the value in href */}
         <span><a target="_blank" href={brewery.url}>{brewery.company_name}</a></span>
         -
-        <span className={brewery.red_yellow_green.toLowerCase()}>
-            {brewery.status}
-        </span>
+        <span>{brewery.status}</span>
         {/* TODO - Deal with this JSON data - maybe a modal?? */}
-        <span><a target="_blank" href={this.infoLink()}>More Info</a></span>
+        <span><a target="_blank" className='more-info' href={this.infoLink()}>More Info</a></span>
       </div>
     );
   }

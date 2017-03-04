@@ -2,6 +2,7 @@ import { autobind } from 'core-decorators';
 
 import { debounce } from './helpers/debounce';
 
+import logo from './logo.svg';
 import React, { Component } from 'react';
 
 import Brewery from './Brewery'
@@ -19,13 +20,17 @@ class Brewers extends Component {
 
   render() {
     return (
-      <div className="Brewers">
+      <div className="brewers">
         <input placeholder="Filter by Brewery"
                ref="searchText"
                onChange={this._handleFilter}
-               id="searchText"
+               id="search-text"
                name="searchText"
                />
+        <div className={(this.state.brewers.length ? 'hidden' : '')}>
+          <p className='loading'>Loading</p>
+          <img src={logo} className='app-logo' alt="logo" />
+        </div>
         {this.renderBrewers()}
       </div>
     );
