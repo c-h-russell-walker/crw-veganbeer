@@ -3,6 +3,7 @@ import { autobind } from 'core-decorators';
 import React, { Component } from 'react';
 
 import Product from './Product';
+import BrewerContact from './BrewerContact';
 
 class BrewerInfo extends Component {
   constructor() {
@@ -16,13 +17,12 @@ class BrewerInfo extends Component {
   render() {
     return (
       <div className="brewer-info">
-        {/* TODO - DRY this up a bit somehow - also style it */}
-        {this.state.brewerInfo.address}
-        {this.state.brewerInfo.city}
-        {this.state.brewerInfo.state}
-        {this.state.brewerInfo.country}
-        {this.state.brewerInfo.phone}
-        {this.state.brewerInfo.notes}
+        <div className={(this.state.products.length ? 'hidden' : '')}>
+          <p className='loading'>Loading</p>
+        </div>
+        <BrewerContact brewerInfo={this.state.brewerInfo} />
+        {/* Need to style these notes */}
+        <span><pre>{this.state.brewerInfo.notes}</pre></span>
         {this._renderProducts()}
       </div>
     );
@@ -53,7 +53,6 @@ class BrewerInfo extends Component {
   @autobind
   _handleFetchBrewerInfo(response) {
     response.json().then(response => {
-      console.log(response);
       this.setState({ brewerInfo: response.company });
       this.setState({ products: response.company.products });
     });
