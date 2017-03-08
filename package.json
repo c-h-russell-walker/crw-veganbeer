@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "core-decorators": "^0.15.0"
+    "core-decorators": "^0.15.0",
+    "custom-react-scripts": "0.0.23"
   },
   "devDependencies": {
     "custom-react-scripts": "0.0.23"
