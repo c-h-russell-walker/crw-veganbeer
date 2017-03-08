@@ -1,6 +1,7 @@
 import { autobind } from 'core-decorators';
 
 import { debounce } from './helpers/debounce';
+import { requireLocalStorage } from './decorators/decorators';
 
 import logo from './logo.svg';
 import React, { Component } from 'react';
@@ -54,23 +55,21 @@ class Brewers extends Component {
     });
   }
 
+  @requireLocalStorage
   componentDidMount() {
-    if (self.localStorage) {
-      // We'll want to refetch if we deem old enough
-      let beerInfo = self.localStorage.getItem('beerInfo');
-      beerInfo = beerInfo && JSON.parse(beerInfo);
-      const retrievedTimestamp = parseInt(this.props.retrievedTimestamp, 10);
+    // We'll want to refetch if we deem old enough
+    let beerInfo = self.localStorage.getItem('beerInfo');
+    beerInfo = beerInfo && JSON.parse(beerInfo);
+    const retrievedTimestamp = parseInt(this.props.retrievedTimestamp, 10);
 
-      // If timestamp is less than or equal to 24 hours ago consider it stale
-      const staleData = retrievedTimestamp <= new Date((+ new Date()) - (3600000 * 24));
+    // If timestamp is less than or equal to 24 hours ago consider it stale
+    const staleData = retrievedTimestamp <= new Date((+ new Date()) - (3600000 * 24));
 
-      if (staleData || !beerInfo) {
-        this._fetchBeerInfo();
-      } else {
-        this.setState({ brewers: beerInfo});
-      }
+    if (staleData || !beerInfo) {
+      // TODO - If we're fetching all new data we should maybe clear any individual breweries' products
+      this._fetchBeerInfo();
     } else {
-      console.warn('don\'t want to hit their API at will - TODO');
+      this.setState({ brewers: beerInfo});
     }
   }
 
