@@ -1,7 +1,4 @@
-import { autobind } from 'core-decorators';
-
 import { debounce } from './helpers/debounce';
-import { requireLocalStorage } from './decorators/decorators';
 
 import logo from './logo.svg';
 import React, { Component } from 'react';
@@ -24,7 +21,7 @@ class Brewers extends Component {
       <div className="brewers">
         <input placeholder="Filter by Brewery"
                ref="searchText"
-               onChange={this._handleFilter}
+               onChange={this._handleFilter.bind(this)}
                id="search-text"
                name="searchText"
                />
@@ -37,7 +34,6 @@ class Brewers extends Component {
     );
   }
 
-  // @autobind
   _handleFilter(evt) {
     // TODO - Filter on other data points maybe??
     this.setState({filterText: this.refs.searchText.value.trim()});
@@ -55,7 +51,6 @@ class Brewers extends Component {
     });
   }
 
-  // @requireLocalStorage
   componentDidMount() {
     // We'll want to refetch if we deem old enough
     let beerInfo = self.localStorage.getItem('beerInfo');
@@ -67,19 +62,17 @@ class Brewers extends Component {
 
     if (staleData || !beerInfo) {
       // TODO - If we're fetching all new data we should maybe clear any individual breweries' products
-      this._fetchBeerInfo();
+      this._fetchBeerInfo.apply(this);
     } else {
       this.setState({ brewers: beerInfo});
     }
   }
 
-  // @autobind
   _fetchBeerInfo() {
     fetch(this.state.barnivoreUrl)
-      .then(this._handleFetchBeerInfo, this._handleFetchError);
+      .then(this._handleFetchBeerInfo.bind(this), this._handleFetchError);
   }
 
-  // @autobind
   _handleFetchBeerInfo(response) {
     response.json().then(response => {
       const brewers = response.map(x => x.company);

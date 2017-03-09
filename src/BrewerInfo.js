@@ -1,8 +1,4 @@
-import { autobind } from 'core-decorators';
-
 import React, { Component } from 'react';
-
-import { requireLocalStorage } from './decorators/decorators';
 
 import Product from './Product';
 import BrewerContact from './BrewerContact';
@@ -42,21 +38,18 @@ class BrewerInfo extends Component {
 
   componentDidMount() {
     if (!Object.keys(this.state.brewerInfo).length) {
-      this._fetchBrewerInfo();
+      this._fetchBrewerInfo.apply(this);
     }
   }
 
-  // @autobind
-  // @requireLocalStorage
   _fetchBrewerInfo() {
     // TODO - leverage localStorage - that way we don't always have to re-fetch
     /* TODO - once setting/getting from localStorage make a reusable abstraction
        to also use with the other main `fetch()` */
     fetch(this._infoLink())
-      .then(this._handleFetchBrewerInfo, this._handleFetchError);
+      .then(this._handleFetchBrewerInfo.bind(this), this._handleFetchError);
   }
 
-  // @autobind
   _handleFetchBrewerInfo(response) {
     response.json().then(response => {
       this.setState({ brewerInfo: response.company });

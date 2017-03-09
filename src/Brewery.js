@@ -1,5 +1,3 @@
-import { autobind } from 'core-decorators';
-
 import React, { Component } from 'react';
 
 import BrewerInfo from './BrewerInfo'
@@ -22,13 +20,12 @@ class Brewery extends Component {
         -
         <span>{brewery.status}</span>
         <span className='more-info'
-              onClick={this._handleInfoClick}>More Info/Products</span>
+              onClick={this._handleInfoClick.bind(this)}>More Info/Products</span>
         <div>{this.state.moreInfo}</div>
       </div>
     );
   }
 
-  // @autobind
   _handleInfoClick() {
     this.setState({
       moreInfo: <BrewerInfo brewerId={this.props.brewer.id} />
