@@ -13,7 +13,7 @@ class Brewers extends Component {
       brewers: [],
       filterText: ''
     };
-    this._handleFilter = debounce(this._handleFilter);
+    this._handleFilter = debounce(this._handleFilter.bind(this));
   }
 
   render() {
@@ -34,7 +34,7 @@ class Brewers extends Component {
     );
   }
 
-  _handleFilter(evt) {
+  _handleFilter() {
     // TODO - Filter on other data points maybe??
     this.setState({filterText: this.refs.searchText.value.trim()});
   }
