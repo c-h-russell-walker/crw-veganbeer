@@ -28,7 +28,7 @@ class Brewery extends Component {
     );
   }
 
-  @autobind
+  // @autobind
   _handleInfoClick() {
     this.setState({
       moreInfo: <BrewerInfo brewerId={this.props.brewer.id} />

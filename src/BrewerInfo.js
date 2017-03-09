@@ -46,8 +46,8 @@ class BrewerInfo extends Component {
     }
   }
 
-  @autobind
-  @requireLocalStorage
+  // @autobind
+  // @requireLocalStorage
   _fetchBrewerInfo() {
     // TODO - leverage localStorage - that way we don't always have to re-fetch
     /* TODO - once setting/getting from localStorage make a reusable abstraction
@@ -56,7 +56,7 @@ class BrewerInfo extends Component {
       .then(this._handleFetchBrewerInfo, this._handleFetchError);
   }
 
-  @autobind
+  // @autobind
   _handleFetchBrewerInfo(response) {
     response.json().then(response => {
       this.setState({ brewerInfo: response.company });

@@ -37,7 +37,7 @@ class Brewers extends Component {
     );
   }
 
-  @autobind
+  // @autobind
   _handleFilter(evt) {
     // TODO - Filter on other data points maybe??
     this.setState({filterText: this.refs.searchText.value.trim()});
@@ -55,7 +55,7 @@ class Brewers extends Component {
     });
   }
 
-  @requireLocalStorage
+  // @requireLocalStorage
   componentDidMount() {
     // We'll want to refetch if we deem old enough
     let beerInfo = self.localStorage.getItem('beerInfo');
@@ -73,13 +73,13 @@ class Brewers extends Component {
     }
   }
 
-  @autobind
+  // @autobind
   _fetchBeerInfo() {
     fetch(this.state.barnivoreUrl)
       .then(this._handleFetchBeerInfo, this._handleFetchError);
   }
 
-  @autobind
+  // @autobind
   _handleFetchBeerInfo(response) {
     response.json().then(response => {
       const brewers = response.map(x => x.company);
