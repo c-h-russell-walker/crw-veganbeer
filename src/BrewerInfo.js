@@ -37,7 +37,12 @@ class BrewerInfo extends Component {
   }
 
   componentDidMount() {
-    if (!Object.keys(this.state.brewerInfo).length) {
+    let companyData = self.localStorage.getItem(`brewerInfo${this.props.brewerId}`);
+    if (companyData) {
+      let company = JSON.parse(companyData);
+      this._setBrewerData(company, company.products);
+      this._storeBrewerData(company.id, company);
+    } else {
       this._fetchBrewerInfo.apply(this);
     }
   }
@@ -52,9 +57,19 @@ class BrewerInfo extends Component {
 
   _handleFetchBrewerInfo(response) {
     response.json().then(response => {
-      this.setState({ brewerInfo: response.company });
-      this.setState({ products: response.company.products });
+      const company = response.company;
+      this._setBrewerData(company, company.products);
+      this._storeBrewerData(company.id, company);
     });
+  }
+
+  _setBrewerData(brewerInfo, products) {
+    this.setState({ brewerInfo });
+    this.setState({ products });
+  }
+
+  _storeBrewerData(companyId, company) {
+    self.localStorage.setItem(`brewerInfo${companyId}`, JSON.stringify(company));
   }
 
   _handleFetchError(error) {
