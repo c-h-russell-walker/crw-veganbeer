@@ -61,8 +61,9 @@ class Brewers extends Component {
     const staleData = retrievedTimestamp <= new Date((+ new Date()) - (3600000 * 24));
 
     if (staleData || !beerInfo) {
-      // TODO - If we're fetching all new data we should maybe clear any individual breweries' products
+      // Fetching all new data so we clear localStorage w/ individual breweries' products
       this._fetchBeerInfo.apply(this);
+      self.localStorage.clear();
     } else {
       this.setState({ brewers: beerInfo});
     }
