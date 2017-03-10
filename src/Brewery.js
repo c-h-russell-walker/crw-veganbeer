@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import BrewerInfo from './BrewerInfo'
-import VeganCircle from './VeganCircle'
+import ColoredCircle from './ColoredCircle'
 
 class Brewery extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class Brewery extends Component {
     const brewery = this.props.brewer;
     return (
       <div className="brewery">
-        <VeganCircle circleColor={brewery.red_yellow_green} />
+        <ColoredCircle circleColor={brewery.red_yellow_green} />
         <span><a target="_blank" href={this.breweryUrl()}>{brewery.company_name}</a></span>
         -
         <span>{brewery.status}</span>
