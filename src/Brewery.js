@@ -7,7 +7,8 @@ class Brewery extends Component {
   constructor() {
     super();
     this.state = {
-      moreInfo: null
+      moreInfo: null,
+      moreInfoHidden: true
     };
   }
 
@@ -21,15 +22,22 @@ class Brewery extends Component {
         <span>{brewery.status}</span>
         <span className='more-info'
               onClick={this._handleInfoClick.bind(this)}>More Info/Products</span>
-        <div>{this.state.moreInfo}</div>
+        <div className={this.state.moreInfoHidden ? 'hidden' : ''}>
+          {this.state.moreInfo}
+        </div>
       </div>
     );
   }
 
   _handleInfoClick() {
-    this.setState({
-      moreInfo: <BrewerInfo brewerId={this.props.brewer.id} />
-    });
+    if (!this.state.moreInfo) {
+      this.setState({
+        moreInfo: <BrewerInfo brewerId={this.props.brewer.id} />
+      });
+      this.setState({moreInfoHidden: false});
+    } else {
+      this.setState({moreInfoHidden: !this.state.moreInfoHidden});
+    }
   }
 
   breweryUrl() {
