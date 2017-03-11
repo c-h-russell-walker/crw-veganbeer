@@ -10,7 +10,12 @@ class App extends Component {
     super();
     this.state = {
       retrievedTimestamp: self.localStorage.getItem('retrievedTimestamp')
-    }
+    };
+    this.timestampHandler = this.timestampHandler.bind(this);
+  }
+
+  timestampHandler(retrievedTimestamp) {
+    this.setState({retrievedTimestamp});
   }
 
   render() {
@@ -20,7 +25,10 @@ class App extends Component {
           <h2>Welcome to VeganBeer</h2>
           <DateRetrieved retrievedTimestamp={this.state.retrievedTimestamp} />
         </div>
-        <Brewers retrievedTimestamp={this.state.retrievedTimestamp} />
+        <Brewers
+          retrievedTimestamp={this.state.retrievedTimestamp}
+          timestampHandler={this.timestampHandler}
+        />
       </div>
     );
   }
