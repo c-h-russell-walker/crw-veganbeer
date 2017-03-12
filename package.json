@@ -9,7 +9,8 @@
     "custom-react-scripts": "0.0.23"
   },
   "devDependencies": {
-    "custom-react-scripts": "0.0.23"
+    "custom-react-scripts": "0.0.23",
+    "fetch-mock": "^5.9.4"
   },
   "scripts": {
     "start": "react-scripts start",
