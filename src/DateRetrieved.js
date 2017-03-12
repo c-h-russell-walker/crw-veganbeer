@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { currentTimestamp } from './helpers/currentTimestamp';
+
 class DateRetrieved extends Component {
   render() {
     return (
@@ -12,7 +14,7 @@ class DateRetrieved extends Component {
 
   formattedDateTime() {
     // TODO - worry about polyfill of String().padStart ??
-    let timestamp = this.props.retrievedTimestamp || + new Date();
+    let timestamp = this.props.retrievedTimestamp || currentTimestamp();
     let date = new Date(parseInt(timestamp, 10));
     let month = String(date.getMonth() + 1).padStart(2, '0');
     let day = String(date.getDate()).padStart(2, '0');
@@ -20,7 +22,7 @@ class DateRetrieved extends Component {
   }
 
   retrievedDate() {
-    let timestamp = this.props.retrievedTimestamp || + new Date();
+    let timestamp = this.props.retrievedTimestamp || currentTimestamp();
     return new Date(parseInt(timestamp, 10)).toLocaleDateString('en-US');
   }
 }

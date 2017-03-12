@@ -1,4 +1,5 @@
 import { debounce } from './helpers/debounce';
+import { currentTimestamp } from './helpers/currentTimestamp';
 
 import logo from './logo.svg';
 import React, { Component } from 'react';
@@ -84,7 +85,7 @@ class Brewers extends Component {
     const retrievedTimestamp = parseInt(this.props.retrievedTimestamp, 10);
 
     // If timestamp is less than or equal to 24 hours ago consider it stale
-    const staleData = retrievedTimestamp <= new Date((+ new Date()) - (3600000 * 24));
+    const staleData = retrievedTimestamp <= new Date(currentTimestamp() - (3600000 * 24));
 
     if (staleData || !beerInfo) {
       // Fetching all new data so we clear localStorage w/ individual breweries' products
@@ -104,7 +105,7 @@ class Brewers extends Component {
     response.json().then(response => {
       const brewers = response.map(x => x.company);
       this.setState({ brewers });
-      const timestamp = + new Date();
+      const timestamp = currentTimestamp();
       self.localStorage.setItem('retrievedTimestamp', timestamp);
       this.props.timestampHandler(timestamp);
       self.localStorage.setItem('beerInfo', JSON.stringify(brewers));
