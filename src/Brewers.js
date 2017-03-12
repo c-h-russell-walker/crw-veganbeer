@@ -3,7 +3,8 @@ import { debounce } from './helpers/debounce';
 import logo from './logo.svg';
 import React, { Component } from 'react';
 
-import Brewery from './Brewery'
+import Brewery from './Brewery';
+import NoResults from './NoResults';
 
 class Brewers extends Component {
   constructor() {
@@ -65,9 +66,13 @@ class Brewers extends Component {
         .filter(x => new RegExp(this.state.filterCity, 'i').test(x.city));
     }
 
-    return breweries.map(function(brewer) {
-        return <Brewery key={brewer.id} brewer={brewer} />
-    });
+    if (breweries.length) {
+      return breweries.map(function(brewer) {
+          return <Brewery key={brewer.id} brewer={brewer} />
+      });
+    } else {
+      return <NoResults />
+    }
   }
 
   componentDidMount() {
