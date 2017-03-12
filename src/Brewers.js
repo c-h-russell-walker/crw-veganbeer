@@ -11,9 +11,11 @@ class Brewers extends Component {
     this.state = {
       barnivoreUrl: 'http://www.barnivore.com/beer.json',
       brewers: [],
-      filterText: ''
+      filterText: '',
+      filterCity: ''
     };
     this._handleFilter = debounce(this._handleFilter.bind(this));
+    this._handleCityFilter = debounce(this._handleCityFilter.bind(this));
   }
 
   render() {
@@ -23,7 +25,15 @@ class Brewers extends Component {
                ref="searchText"
                onChange={this._handleFilter.bind(this)}
                id="search-text"
+               className="filter"
                name="searchText"
+               />
+        <input placeholder="Filter by City"
+               ref="searchCity"
+               onChange={this._handleCityFilter.bind(this)}
+               id="search-city"
+               className="filter"
+               name="searchCity"
                />
         <div className={(this.state.brewers.length ? 'hidden' : '')}>
           <img src={logo} className='app-logo' alt="logo" />
@@ -39,11 +49,20 @@ class Brewers extends Component {
     this.setState({filterText: this.refs.searchText.value.trim()});
   }
 
+  _handleCityFilter() {
+    this.setState({filterCity: this.refs.searchCity.value.trim()});
+  }
+
   _renderBrewers() {
     let breweries = this.state.brewers;
     if (this.state.filterText.length > 2) {
       breweries = breweries
         .filter(x => new RegExp(this.state.filterText, 'i').test(x.company_name));
+    }
+
+    if (this.state.filterCity.length > 2) {
+      breweries = breweries
+        .filter(x => new RegExp(this.state.filterCity, 'i').test(x.city));
     }
 
     return breweries.map(function(brewer) {
@@ -52,6 +71,8 @@ class Brewers extends Component {
   }
 
   componentDidMount() {
+    this.refs.searchText.focus();
+
     // We'll want to refetch if we deem old enough
     let beerInfo = self.localStorage.getItem('beerInfo');
     beerInfo = beerInfo && JSON.parse(beerInfo);
