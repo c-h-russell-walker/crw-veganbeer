@@ -71,7 +71,7 @@ class Brewers extends Component {
       return breweries.map(function(brewer) {
           return <Brewery key={brewer.id} brewer={brewer} />
       });
-    } else {
+    } else if (this.state.filterCity || this.state.filterText) {
       return <NoResults />
     }
   }
