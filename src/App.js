@@ -19,7 +19,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div id="app">
         <div className="app-header">
           <h2>Welcome to VeganBeer</h2>
           <DateRetrieved retrievedTimestamp={this.state.retrievedTimestamp} />

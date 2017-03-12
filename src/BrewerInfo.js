@@ -20,7 +20,7 @@ class BrewerInfo extends Component {
         </div>
         <BrewerContact brewerInfo={this.state.brewerInfo} />
         {/* Need to style these notes */}
-        <span><p>{this.state.brewerInfo.notes}</p></span>
+        <p className="brewer-notes">{this.state.brewerInfo.notes}</p>
         {this._renderProducts()}
       </div>
     );

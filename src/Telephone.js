@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Telephone extends Component {
   render() {
     return (
-      <a href={this._renderPhoneHref()}>{this.props.phone}</a>
+      <a className="tel-link" href={this._renderPhoneHref()}>{this.props.phone}</a>
     );
   }
 

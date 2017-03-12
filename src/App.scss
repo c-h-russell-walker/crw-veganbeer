@@ -3,8 +3,8 @@ $green: green;
 $red: red;
 $yellow: gold; // #FFD700
 
-.app {
-  &-header {
+#app {
+  .app-header {
     background-color: #222;
     padding: 1em 2em;
     color: white;
@@ -37,8 +37,14 @@ $yellow: gold; // #FFD700
     padding: 0.5em;
     width: auto;
 
-    span {
+    span,
+    address,
+    .tel-link,
+    .brewer-notes {
       margin: 0.5em;
+    }
+
+    span {
       &.more-info {
         font-size: 0.8em;
         cursor: pointer;
@@ -75,7 +81,7 @@ $yellow: gold; // #FFD700
     display: none;
   }
 
-  &-logo {
+  .app-logo {
     animation: app-logo-spin infinite 20s linear;
     height: 5em;
   }
