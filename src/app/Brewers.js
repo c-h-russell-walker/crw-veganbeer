@@ -1,5 +1,6 @@
 import { debounce } from '../helpers/debounce';
 import { currentTimestamp } from '../helpers/currentTimestamp';
+import { baseUrl } from '../constants/constants';
 
 import logo from '../logo.svg';
 import React, { Component } from 'react';
@@ -11,7 +12,7 @@ class Brewers extends Component {
   constructor() {
     super();
     this.state = {
-      barnivoreUrl: 'http://www.barnivore.com/beer.json',
+      barnivoreUrl: `${baseUrl}beer.json`,
       brewers: [],
       filterText: '',
       filterCity: ''

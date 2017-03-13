@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { baseUrl } from '../constants/constants';
+
 import Product from './Product';
 import BrewerContact from './BrewerContact';
 
@@ -27,7 +29,7 @@ class BrewerInfo extends Component {
   }
 
   _infoLink() {
-    return `http://www.barnivore.com/company/${this.props.brewerId}.json`;
+    return `${baseUrl}company/${this.props.brewerId}.json`;
   }
 
   _renderProducts() {
@@ -48,9 +50,7 @@ class BrewerInfo extends Component {
   }
 
   _fetchBrewerInfo() {
-    // TODO - leverage localStorage - that way we don't always have to re-fetch
-    /* TODO - once setting/getting from localStorage make a reusable abstraction
-       to also use with the other main `fetch()` */
+    // TODO - make a reusable abstraction to also use with the other main `fetch()`
     fetch(this._infoLink())
       .then(this._handleFetchBrewerInfo.bind(this), this._handleFetchError);
   }
