@@ -1,7 +1,7 @@
-import { debounce } from './helpers/debounce';
-import { currentTimestamp } from './helpers/currentTimestamp';
+import { debounce } from '../helpers/debounce';
+import { currentTimestamp } from '../helpers/currentTimestamp';
 
-import logo from './logo.svg';
+import logo from '../logo.svg';
 import React, { Component } from 'react';
 
 import Brewery from './Brewery';

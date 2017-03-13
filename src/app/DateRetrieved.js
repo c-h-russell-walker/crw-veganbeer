@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { currentTimestamp } from './helpers/currentTimestamp';
+import { currentTimestamp } from '../helpers/currentTimestamp';
 
 class DateRetrieved extends Component {
   render() {

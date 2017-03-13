@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import './App.scss';
+import '../App.scss';
 
 import DateRetrieved from './DateRetrieved';
 import Brewers from './Brewers';
