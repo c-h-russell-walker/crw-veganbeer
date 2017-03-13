@@ -2,6 +2,7 @@ import fetchMock from 'fetch-mock';
 
 // import { singleBreweryResponse } from './fixtures/singleBreweryResponse';
 import { breweriesResponse } from './fixtures/breweriesResponse';
+import { brewerInfoResponse } from './fixtures/brewerInfoResponse';
 
 const localStorageMock = {
   getItem: jest.fn(),
@@ -29,5 +30,10 @@ function padStartPolyfill(targetLength, padString) {
 
 String.prototype.padStart = padStartPolyfill;
 
-// Mock requests
+/*
+ * Mock requests
+*/
+
 fetchMock.get('http://www.barnivore.com/beer.json', breweriesResponse);
+
+fetchMock.get('http://www.barnivore.com/company/42.json', brewerInfoResponse);
