@@ -1,4 +1,6 @@
-import { debounce } from '../helpers/debounce';
+// TODO - was able to leverage `debounce()` earlier
+// import { debounce } from '../helpers/debounce';
+
 import { currentTimestamp } from '../helpers/currentTimestamp';
 import { baseUrl } from '../constants/constants';
 
@@ -18,8 +20,6 @@ class Brewers extends Component {
       filterText: '',
       filterCity: ''
     };
-    this._handleFilter = debounce(this._handleFilter.bind(this));
-    this._handleCityFilter = debounce(this._handleCityFilter.bind(this));
   }
 
   render() {
@@ -27,13 +27,14 @@ class Brewers extends Component {
       <div className="brewers">
         <input placeholder="Filter by Brewery"
                ref="searchText"
+               value={this.state.filterText}
                onChange={this._handleFilter.bind(this)}
                id="search-text"
                className="filter"
                name="searchText"
                />
         <input placeholder="Filter by City"
-               ref="searchCity"
+               value={this.state.filterCity}
                onChange={this._handleCityFilter.bind(this)}
                id="search-city"
                className="filter"
@@ -51,12 +52,12 @@ class Brewers extends Component {
     );
   }
 
-  _handleFilter() {
-    this.setState({filterText: this.refs.searchText.value.trim()});
+  _handleFilter(evt) {
+    this.setState({filterText: evt.target.value.trim()});
   }
 
-  _handleCityFilter() {
-    this.setState({filterCity: this.refs.searchCity.value.trim()});
+  _handleCityFilter(evt) {
+    this.setState({filterCity: evt.target.value.trim()});
   }
 
   _clearFilters() {
