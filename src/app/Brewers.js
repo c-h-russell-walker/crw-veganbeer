@@ -6,6 +6,7 @@ import logo from '../logo.svg';
 import React, { Component } from 'react';
 
 import Brewery from './Brewery';
+import Button from './Button';
 import NoResults from './NoResults';
 
 class Brewers extends Component {
@@ -38,6 +39,9 @@ class Brewers extends Component {
                className="filter"
                name="searchCity"
                />
+        <Button displayText={'Clear Filters'}
+                callback={this._clearFilters.bind(this)}
+                />
         <div className={(this.state.brewers.length ? 'hidden' : '')}>
           <img src={logo} className='app-logo' alt="logo" />
           <p className='loading'>Loading</p>
@@ -48,12 +52,16 @@ class Brewers extends Component {
   }
 
   _handleFilter() {
-    // TODO - Filter on other data points maybe??
     this.setState({filterText: this.refs.searchText.value.trim()});
   }
 
   _handleCityFilter() {
     this.setState({filterCity: this.refs.searchCity.value.trim()});
+  }
+
+  _clearFilters() {
+    this.setState({filterText: ''});
+    this.setState({filterCity: ''});
   }
 
   _renderBrewers() {
