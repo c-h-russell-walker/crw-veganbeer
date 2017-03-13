@@ -3,6 +3,13 @@ $green: green;
 $red: red;
 $yellow: gold; // #FFD700
 
+.button {
+  cursor: pointer;
+  margin: 1.2em;
+  padding: 0.6em;
+  font-size: 0.8em;
+}
+
 #app {
   .app-header {
     background-color: #222;
