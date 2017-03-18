@@ -1,3 +1,4 @@
+import { autobind } from 'core-decorators';
 import React, {Component} from 'react';
 
 import '../App.scss';
@@ -13,6 +14,7 @@ class App extends Component {
     };
   }
 
+  @autobind
   timestampHandler(retrievedTimestamp) {
     this.setState({retrievedTimestamp});
   }
@@ -26,7 +28,7 @@ class App extends Component {
         </div>
         <Brewers
           retrievedTimestamp={this.state.retrievedTimestamp}
-          timestampHandler={this.timestampHandler.bind(this)}
+          timestampHandler={this.timestampHandler}
         />
       </div>
     );
