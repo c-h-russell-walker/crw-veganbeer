@@ -1,3 +1,5 @@
+import { autobind } from 'core-decorators';
+
 import React, { Component } from 'react';
 
 import BrewerInfo from './BrewerInfo'
@@ -21,7 +23,7 @@ class Brewery extends Component {
         -
         <span>{brewery.status}</span>
         <span className='more-info'
-              onClick={this._handleInfoClick.bind(this)}>More Info/Products</span>
+              onClick={this._handleInfoClick}>More Info/Products</span>
         <div className={this.state.moreInfoHidden ? 'hidden' : ''}>
           {this.state.moreInfo}
         </div>
@@ -29,6 +31,7 @@ class Brewery extends Component {
     );
   }
 
+  @autobind
   _handleInfoClick() {
     if (!this.state.moreInfo) {
       this.setState({

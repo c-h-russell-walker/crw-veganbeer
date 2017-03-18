@@ -1,3 +1,5 @@
+import { autobind } from 'core-decorators';
+
 // TODO - was able to leverage `debounce()` earlier
 // import { debounce } from '../helpers/debounce';
 
@@ -28,20 +30,20 @@ class Brewers extends Component {
         <input placeholder="Filter by Brewery"
                ref="searchText"
                value={this.state.filterText}
-               onChange={this._handleFilter.bind(this)}
+               onChange={this._handleFilter}
                id="search-text"
                className="filter"
                name="searchText"
                />
         <input placeholder="Filter by City"
                value={this.state.filterCity}
-               onChange={this._handleCityFilter.bind(this)}
+               onChange={this._handleCityFilter}
                id="search-city"
                className="filter"
                name="searchCity"
                />
         <Button displayText={'Clear Filters'}
-                callback={this._clearFilters.bind(this)}
+                callback={this._clearFilters}
                 />
         <div className={(this.state.brewers.length ? 'hidden' : '')}>
           <img src={logo} className='app-logo' alt="logo" />
@@ -52,14 +54,17 @@ class Brewers extends Component {
     );
   }
 
+  @autobind
   _handleFilter(evt) {
     this.setState({filterText: evt.target.value.trim()});
   }
 
+  @autobind
   _handleCityFilter(evt) {
     this.setState({filterCity: evt.target.value.trim()});
   }
 
+  @autobind
   _clearFilters() {
     this.setState({filterText: ''});
     this.setState({filterCity: ''});
@@ -99,18 +104,20 @@ class Brewers extends Component {
 
     if (staleData || !beerInfo) {
       // Fetching all new data so we clear localStorage w/ individual breweries' products
-      this._fetchBeerInfo.apply(this);
+      this._fetchBeerInfo();
       self.localStorage.clear();
     } else {
       this.setState({ brewers: beerInfo});
     }
   }
 
+  @autobind
   _fetchBeerInfo() {
     fetch(this.state.barnivoreUrl)
-      .then(this._handleFetchBeerInfo.bind(this), this._handleFetchError);
+      .then(this._handleFetchBeerInfo, this._handleFetchError);
   }
 
+  @autobind
   _handleFetchBeerInfo(response) {
     response.json().then(response => {
       const brewers = response.map(x => x.company);

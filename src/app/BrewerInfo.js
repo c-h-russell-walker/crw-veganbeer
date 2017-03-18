@@ -1,3 +1,4 @@
+import { autobind } from 'core-decorators';
 import React, { Component } from 'react';
 
 import { baseUrl } from '../constants/constants';
@@ -45,16 +46,18 @@ class BrewerInfo extends Component {
       this._setBrewerData(company, company.products);
       this._storeBrewerData(company.id, company);
     } else {
-      this._fetchBrewerInfo.apply(this);
+      this._fetchBrewerInfo();
     }
   }
 
+  @autobind
   _fetchBrewerInfo() {
     // TODO - make a reusable abstraction to also use with the other main `fetch()`
     fetch(this._infoLink())
-      .then(this._handleFetchBrewerInfo.bind(this), this._handleFetchError);
+      .then(this._handleFetchBrewerInfo, this._handleFetchError);
   }
 
+  @autobind
   _handleFetchBrewerInfo(response) {
     response.json().then(response => {
       const company = response.company;
