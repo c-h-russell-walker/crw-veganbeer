@@ -15,15 +15,8 @@ class DateRetrieved extends Component {
   formattedDateTime() {
     let timestamp = this.props.retrievedTimestamp || currentTimestamp();
     let date = new Date(parseInt(timestamp, 10));
-    // TODO - worry about polyfill of String().padStart ??
-    let month, day;
-    if (String.prototype.padStart) {
-      month = String(date.getMonth() + 1).padStart(2, '0');
-      day = String(date.getDate()).padStart(2, '0');
-    } else {
-      month = date.getMonth() + 1;
-      day = date.getDate();
-    }
+    let month = String(date.getMonth() + 1).padStart(2, '0');
+    let day = String(date.getDate()).padStart(2, '0');
     return `${date.getFullYear()}-${month}-${day}`;
   }
 
