@@ -32,3 +32,11 @@ if (!String.prototype.padStart) {
     }
   };
 }
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function startsWith(searchString, position) {
+    position = position || 0;
+    return this.substr(position, searchString.length) === searchString;
+  };
+}

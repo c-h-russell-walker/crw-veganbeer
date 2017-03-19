@@ -46,13 +46,7 @@ class Brewery extends Component {
   breweryUrl() {
     let url = this.props.brewer.url
     // Prepend protocol agnostic double slash if no protocol present
-
-    // TODO - get polyfill up and running for startsWith
-    if (String.prototype.startsWith) {
-      return (url.startsWith('http') ? '' : '//') + url;
-    } else {
-      return ((url.indexOf('http') === 0) ? '' : '//') + url;
-    }
+    return (url.startsWith('http') ? '' : '//') + url;
   }
 }
 
