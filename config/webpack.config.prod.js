@@ -134,7 +134,7 @@ module.exports = {
         include: paths.appSrc,
         loader: 'babel',
         query: {
-          plugins: ['transform-decorators-legacy']
+          plugins: customConfig.babelPlugins
         }
       },
       // The notation here is somewhat confusing.
