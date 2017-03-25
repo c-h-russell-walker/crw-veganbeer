@@ -12,13 +12,17 @@ import React, { Component } from 'react';
 import Brewery from './Brewery';
 import Button from './Button';
 import NoResults from './NoResults';
+import Paginator from './Paginator';
 
 class Brewers extends Component {
   constructor() {
     super();
+    this.pages = [];
     this.state = {
       barnivoreUrl: `${baseUrl}beer.json`,
       brewers: [],
+      // Defaulting to first letter for now - let's also store in sessionStorage
+      currentPage: 'A',
       filterText: '',
       filterCity: ''
     };
@@ -45,6 +49,10 @@ class Brewers extends Component {
         <Button displayText={'Clear Filters'}
                 callback={this._clearFilters}
                 />
+        {/* TODO - make paginator have numeric button (also maybe 'other') */}
+        <Paginator pages={this.state.pages}
+                   current={this.state.currentPage}
+                   callback={this._handlePageClick} />
         <div className={(this.state.brewers.length ? 'hidden' : '')}>
           <img src={logo} className='app-logo' alt="logo" />
           <p className='loading'>Loading</p>
@@ -57,17 +65,34 @@ class Brewers extends Component {
   @autobind
   _handleFilter(evt) {
     this.setState({filterText: evt.target.value.trim()});
+    this._clearCurrentPage();
   }
 
   @autobind
   _handleCityFilter(evt) {
     this.setState({filterCity: evt.target.value.trim()});
+    this._clearCurrentPage();
+  }
+
+  _clearCurrentPage() {
+    // TODO - Pretty big - have to deal with UX/logic of pages and filters
+    this.setState({currentPage: ''});
+  }
+
+  @autobind
+  _handlePageClick(evt) {
+    /* TODO - worry about current page (in sessionStorage?) */
+    this.setState({currentPage: evt.target.value});
   }
 
   @autobind
   _clearFilters() {
-    this.setState({filterText: ''});
-    this.setState({filterCity: ''});
+    this.setState({
+      filterText: '',
+      filterCity: '',
+      currentPage: '',
+    });
+    // TODO - set currentPage back to what's in sessionStorage
   }
 
   _renderBrewers() {
@@ -82,11 +107,16 @@ class Brewers extends Component {
         .filter(x => new RegExp(this.state.filterCity, 'i').test(x.city));
     }
 
-    if (breweries.length) {
-      return breweries.map(function(brewer) {
-          return <Brewery key={brewer.id} brewer={brewer} />
-      });
-    } else if (this.state.filterCity || this.state.filterText) {
+    let filtering = this.state.filterCity || this.state.filterText;
+    if (breweries.length && !filtering) {
+      return breweries.filter((br) => {
+          return br.company_name.toUpperCase().startsWith(this.state.currentPage)
+        }).map((brewer) => {
+            return <Brewery key={brewer.id} brewer={brewer} />
+        });
+    } else if (breweries.length && filtering) {
+      return breweries.map((brewer) => <Brewery key={brewer.id} brewer={brewer} />);
+    } else if (filtering && !breweries.length) {
       return <NoResults />
     }
   }
@@ -108,6 +138,20 @@ class Brewers extends Component {
       self.localStorage.clear();
     } else {
       this.setState({ brewers: beerInfo});
+    }
+  }
+
+  componentDidUpdate() {
+    // TODO - Is this where this should go?
+    if (!this.state.pages && this.state.brewers) {
+      // `map` creates array of uppercase first characters
+      // then we use a Set to get rid of dupes
+      // lastly we destructure into a literal array, literally.
+      // TODO - damn you IE, check for support and/or transpiling of `new Set()`
+      let pageSet = new Set(this.state.brewers.map((br) => br.company_name[0].toUpperCase()));
+      this.setState({
+        pages: [...pageSet]
+      });
     }
   }
 
