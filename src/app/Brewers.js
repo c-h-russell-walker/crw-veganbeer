@@ -21,8 +21,7 @@ class Brewers extends Component {
     this.state = {
       barnivoreUrl: `${baseUrl}beer.json`,
       brewers: [],
-      // Defaulting to first letter for now - let's also store in sessionStorage
-      currentPage: 'A',
+      currentPage: '',
       filterText: '',
       filterCity: ''
     };
@@ -76,13 +75,14 @@ class Brewers extends Component {
 
   _clearCurrentPage() {
     // TODO - Pretty big - have to deal with UX/logic of pages and filters
+    // do they interact or are they independent??
     this.setState({currentPage: ''});
   }
 
   @autobind
   _handlePageClick(evt) {
-    /* TODO - worry about current page (in sessionStorage?) */
     this.setState({currentPage: evt.target.value});
+    self.sessionStorage.setItem('currentPage', evt.target.value);
   }
 
   @autobind
@@ -90,9 +90,8 @@ class Brewers extends Component {
     this.setState({
       filterText: '',
       filterCity: '',
-      currentPage: '',
+      currentPage: self.sessionStorage.getItem('currentPage'),
     });
-    // TODO - set currentPage back to what's in sessionStorage
   }
 
   _renderBrewers() {
@@ -138,6 +137,15 @@ class Brewers extends Component {
       self.localStorage.clear();
     } else {
       this.setState({ brewers: beerInfo});
+    }
+
+    if (!this.state.currentPage) {
+      let curr = self.sessionStorage.getItem('currentPage');
+      if (!curr) {
+        curr = 'A';
+        self.sessionStorage.setItem('currentPage', curr);
+      }
+      this.setState({currentPage: curr});
     }
   }
 
