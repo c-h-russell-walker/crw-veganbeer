@@ -14,6 +14,10 @@ import Button from './Button';
 import NoResults from './NoResults';
 import Paginator from './Paginator';
 
+/*
+  TODO - this file is getting too big - 'code smell' - break it up
+*/
+
 class Brewers extends Component {
   constructor() {
     super();
@@ -48,7 +52,6 @@ class Brewers extends Component {
         <Button displayText={'Clear Filters'}
                 callback={this._clearFilters}
                 />
-        {/* TODO - make paginator have numeric button (also maybe 'other') */}
         <Paginator pages={this.state.pages}
                    current={this.state.currentPage}
                    callback={this._handlePageClick} />
@@ -108,8 +111,15 @@ class Brewers extends Component {
 
     let filtering = this.state.filterCity || this.state.filterText;
     if (breweries.length && !filtering) {
+      const numericReg = /^\d$/;
       return breweries.filter((br) => {
-          return br.company_name.toUpperCase().startsWith(this.state.currentPage)
+          if (this.state.currentPage === 'Digit') {
+            return numericReg.test(br.company_name[0])
+          } else {
+            // TODO - filter with regex
+              // if we did that we could also avoid the toUpperCase() and use `i`
+            return br.company_name.toUpperCase().startsWith(this.state.currentPage)
+          }
         }).map((brewer) => {
             return <Brewery key={brewer.id} brewer={brewer} />
         });
@@ -150,13 +160,24 @@ class Brewers extends Component {
   }
 
   componentDidUpdate() {
+    const numericReg = /^\d$/;
     // TODO - Is this where this should go?
     if (!this.state.pages && this.state.brewers) {
       // `map` creates array of uppercase first characters
       // then we use a Set to get rid of dupes
       // lastly we destructure into a literal array, literally.
       // TODO - damn you IE, check for support and/or transpiling of `new Set()`
-      let pageSet = new Set(this.state.brewers.map((br) => br.company_name[0].toUpperCase()));
+      let pageArray = this.state.brewers.map((br) => {
+        let companyInitial = br.company_name[0];
+        if (numericReg.test(companyInitial)) {
+          return 'Digit';
+        } else {
+          return companyInitial.toUpperCase();
+        }
+      });
+
+
+      let pageSet = new Set(pageArray);
       this.setState({
         pages: [...pageSet]
       });

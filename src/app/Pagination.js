@@ -7,16 +7,15 @@ class Pagination extends Component {
     return (
       <button onClick={this._handleClick}
               value={this.props.page}
-              className={this._className()}
+              className={`pager ${this._currentClass()}`}
               type="button">{this.props.page}</button>
     );
   }
 
-  _className() {
-    return `
-      pager
-      ${(this.props.page === this.props.current) ? 'current-page' : ''}
-    `;
+  _currentClass() {
+    // TODO - maybe inject the string 'Digit' - so easier to change in the future
+    let page = (this.props.page === 'Digit') ? 'Digit' : this.props.page;
+    return `${(page === this.props.current) ? 'current-page' : ''}`;
   }
 
   @autobind
