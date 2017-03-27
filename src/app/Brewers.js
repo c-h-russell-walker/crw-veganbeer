@@ -12,13 +12,20 @@ import React, { Component } from 'react';
 import Brewery from './Brewery';
 import Button from './Button';
 import NoResults from './NoResults';
+import Paginator from './Paginator';
+
+/*
+  TODO - this file is getting too big - 'code smell' - break it up
+*/
 
 class Brewers extends Component {
   constructor() {
     super();
+    this.pages = [];
     this.state = {
       barnivoreUrl: `${baseUrl}beer.json`,
       brewers: [],
+      currentPage: '',
       filterText: '',
       filterCity: ''
     };
@@ -45,6 +52,9 @@ class Brewers extends Component {
         <Button displayText={'Clear Filters'}
                 callback={this._clearFilters}
                 />
+        <Paginator pages={this.state.pages}
+                   current={this.state.currentPage}
+                   callback={this._handlePageClick} />
         <div className={(this.state.brewers.length ? 'hidden' : '')}>
           <img src={logo} className='app-logo' alt="logo" />
           <p className='loading'>Loading</p>
@@ -57,17 +67,34 @@ class Brewers extends Component {
   @autobind
   _handleFilter(evt) {
     this.setState({filterText: evt.target.value.trim()});
+    this._clearCurrentPage();
   }
 
   @autobind
   _handleCityFilter(evt) {
     this.setState({filterCity: evt.target.value.trim()});
+    this._clearCurrentPage();
+  }
+
+  _clearCurrentPage() {
+    // TODO - Pretty big - have to deal with UX/logic of pages and filters
+    // do they interact or are they independent??
+    this.setState({currentPage: ''});
+  }
+
+  @autobind
+  _handlePageClick(evt) {
+    this.setState({currentPage: evt.target.value});
+    self.sessionStorage.setItem('currentPage', evt.target.value);
   }
 
   @autobind
   _clearFilters() {
-    this.setState({filterText: ''});
-    this.setState({filterCity: ''});
+    this.setState({
+      filterText: '',
+      filterCity: '',
+      currentPage: self.sessionStorage.getItem('currentPage'),
+    });
   }
 
   _renderBrewers() {
@@ -82,11 +109,23 @@ class Brewers extends Component {
         .filter(x => new RegExp(this.state.filterCity, 'i').test(x.city));
     }
 
-    if (breweries.length) {
-      return breweries.map(function(brewer) {
-          return <Brewery key={brewer.id} brewer={brewer} />
-      });
-    } else if (this.state.filterCity || this.state.filterText) {
+    let filtering = this.state.filterCity || this.state.filterText;
+    if (breweries.length && !filtering) {
+      const numericReg = /^\d$/;
+      return breweries.filter((br) => {
+          if (this.state.currentPage === 'Digit') {
+            return numericReg.test(br.company_name[0])
+          } else {
+            // TODO - filter with regex
+              // if we did that we could also avoid the toUpperCase() and use `i`
+            return br.company_name.toUpperCase().startsWith(this.state.currentPage)
+          }
+        }).map((brewer) => {
+            return <Brewery key={brewer.id} brewer={brewer} />
+        });
+    } else if (breweries.length && filtering) {
+      return breweries.map((brewer) => <Brewery key={brewer.id} brewer={brewer} />);
+    } else if (filtering && !breweries.length) {
       return <NoResults />
     }
   }
@@ -108,6 +147,40 @@ class Brewers extends Component {
       self.localStorage.clear();
     } else {
       this.setState({ brewers: beerInfo});
+    }
+
+    if (!this.state.currentPage) {
+      let curr = self.sessionStorage.getItem('currentPage');
+      if (!curr) {
+        curr = 'A';
+        self.sessionStorage.setItem('currentPage', curr);
+      }
+      this.setState({currentPage: curr});
+    }
+  }
+
+  componentDidUpdate() {
+    const numericReg = /^\d$/;
+    // TODO - Is this where this should go?
+    if (!this.state.pages && this.state.brewers) {
+      // `map` creates array of uppercase first characters
+      // then we use a Set to get rid of dupes
+      // lastly we destructure into a literal array, literally.
+      // TODO - damn you IE, check for support and/or transpiling of `new Set()`
+      let pageArray = this.state.brewers.map((br) => {
+        let companyInitial = br.company_name[0];
+        if (numericReg.test(companyInitial)) {
+          return 'Digit';
+        } else {
+          return companyInitial.toUpperCase();
+        }
+      });
+
+
+      let pageSet = new Set(pageArray);
+      this.setState({
+        pages: [...pageSet]
+      });
     }
   }
 
