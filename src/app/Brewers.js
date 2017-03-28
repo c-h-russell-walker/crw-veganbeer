@@ -66,13 +66,13 @@ class Brewers extends Component {
 
   @autobind
   _handleFilter(evt) {
-    this.setState({filterText: evt.target.value.trim()});
+    this.setState({filterText: evt.target.value});
     this._clearCurrentPage();
   }
 
   @autobind
   _handleCityFilter(evt) {
-    this.setState({filterCity: evt.target.value.trim()});
+    this.setState({filterCity: evt.target.value});
     this._clearCurrentPage();
   }
 
@@ -100,13 +100,13 @@ class Brewers extends Component {
   _renderBrewers() {
     let breweries = this.state.brewers;
     if (this.state.filterText.length > 2) {
-      breweries = breweries
-        .filter(x => new RegExp(this.state.filterText, 'i').test(x.company_name));
+      let filterText = this.state.filterText.trim();
+      breweries = breweries.filter(x => new RegExp(filterText, 'i').test(x.company_name));
     }
 
     if (this.state.filterCity.length > 2) {
-      breweries = breweries
-        .filter(x => new RegExp(this.state.filterCity, 'i').test(x.city));
+      let filterCity = this.state.filterCity.trim();
+      breweries = breweries.filter(x => new RegExp(filterCity, 'i').test(x.city));
     }
 
     let filtering = this.state.filterCity || this.state.filterText;
