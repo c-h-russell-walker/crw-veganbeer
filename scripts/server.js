@@ -11,6 +11,10 @@ const app = express(),
       DEFAULT_PORT = 3000,
       compiler = webpack(config);
 
+// Getting wild here and being heavy handed while I'm making lots of updates
+// TODO - reinstate use of ETag
+app.disable('etag');
+
 app.set('port', process.env.PORT || DEFAULT_PORT);
 
 app.use(express.static(DIST_DIR));
