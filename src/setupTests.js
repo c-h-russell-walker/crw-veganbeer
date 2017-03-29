@@ -4,12 +4,13 @@ import fetchMock from 'fetch-mock';
 import { breweriesResponse } from './fixtures/breweriesResponse';
 import { brewerInfoResponse } from './fixtures/brewerInfoResponse';
 
-const localStorageMock = {
+const storageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   clear: jest.fn()
 };
-global.localStorage = localStorageMock;
+global.localStorage = storageMock;
+global.sessionStorage = storageMock;
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart#Polyfill
 function padStartPolyfill(targetLength, padString) {
