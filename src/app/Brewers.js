@@ -112,9 +112,12 @@ class Brewers extends Component {
     let filtering = this.state.filterCity || this.state.filterText;
     if (breweries.length && !filtering) {
       const numericReg = /^\d$/;
+      const alphaNumericReg = /^[a-zA-Z0-9]$/;
       return breweries.filter((br) => {
           if (this.state.currentPage === 'Digit') {
             return numericReg.test(br.company_name[0])
+          } else if (this.state.currentPage === 'Other') {
+            return !alphaNumericReg.test(br.company_name[0])
           } else {
             // TODO - filter with regex
               // if we did that we could also avoid the toUpperCase() and use `i`
@@ -160,24 +163,41 @@ class Brewers extends Component {
   }
 
   componentDidUpdate() {
+    const digit = 'Digit';
+    const other = 'Other';
     const numericReg = /^\d$/;
+    const alphaReg = /^[a-zA-Z]$/;
     // TODO - Is this where this should go?
     if (!this.state.pages && this.state.brewers) {
       // `map` creates array of uppercase first characters
       // then we use a Set to get rid of dupes
       // lastly we destructure into a literal array, literally.
-      // TODO - damn you IE, check for support and/or transpiling of `new Set()`
+      // TODO - damn you IE, check for support and/or transpiling of `new Set()` and methods
       let pageArray = this.state.brewers.map((br) => {
         let companyInitial = br.company_name[0];
         if (numericReg.test(companyInitial)) {
-          return 'Digit';
-        } else {
+          return digit;
+        } else if (alphaReg.test(companyInitial)) {
           return companyInitial.toUpperCase();
+        } else {
+          return other;
         }
       });
 
-
       let pageSet = new Set(pageArray);
+
+      // Let's put 'Digit' at the end
+      if (pageSet.has(digit)) {
+        pageSet.delete(digit);
+        pageSet.add(digit);
+      }
+
+      // If we have any 'Other' values let's put that after Digit
+      if (pageSet.has(other)) {
+        pageSet.delete(other);
+        pageSet.add(other);
+      }
+
       this.setState({
         pages: [...pageSet]
       });
