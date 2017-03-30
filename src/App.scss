@@ -65,6 +65,9 @@ $yellow: gold; // #FFD700
     .brewer-notes {
       margin: 0.5em;
     }
+    .brewer-notes {
+      line-height: 1.3em;
+    }
 
     span {
       &.more-info {
@@ -79,6 +82,11 @@ $yellow: gold; // #FFD700
 
     .product {
       margin-left: 1.5em;
+
+      .product-status {
+        font-style: italic;
+        font-size: 0.8em;
+      }
     }
   }
 

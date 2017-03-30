@@ -23,7 +23,7 @@ class Brewery extends Component {
         -
         <span>{brewery.status}</span>
         <span className='more-info'
-              onClick={this._handleInfoClick}>More Info/Products</span>
+              onClick={this._handleInfoClick}>Details</span>
         <div className={this.state.moreInfoHidden ? 'hidden' : ''}>
           {this.state.moreInfo}
         </div>

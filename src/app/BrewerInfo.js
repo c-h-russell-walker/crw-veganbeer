@@ -22,7 +22,6 @@ class BrewerInfo extends Component {
           <p className='loading'>Loading</p>
         </div>
         <BrewerContact brewerInfo={this.state.brewerInfo} />
-        {/* Need to style these notes */}
         <p className="brewer-notes">{this.state.brewerInfo.notes}</p>
         {this._renderProducts()}
       </div>
