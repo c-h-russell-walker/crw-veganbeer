@@ -167,8 +167,11 @@ class Brewers extends Component {
     const other = 'Other';
     const numericReg = /^\d$/;
     const alphaReg = /^[a-zA-Z]$/;
-    // TODO - Is this where this should go?
-    if (!this.state.pages && this.state.brewers) {
+
+    // TODO - Is this where this should go (componentDidUpdate)?
+    let havePages = this.state.pages && this.state.pages.length;
+    let haveBrewers = this.state.brewers && this.state.brewers.length;
+    if (!havePages && haveBrewers) {
       // `map` creates array of uppercase first characters
       // then we use a Set to get rid of dupes
       // lastly we destructure into a literal array, literally.
