@@ -60,16 +60,18 @@ class Brewers extends Component {
 
   @autobind
   _handleNameFilter(evt) {
-    this._setFilter({filterText: evt.target.value});
+    this._setFilter({filter: 'filterText', value: evt.target.value});
   }
 
   @autobind
   _handleCityFilter(evt) {
-    this._setFilter({filterCity: evt.target.value});
+    this._setFilter({filter: 'filterCity', value: evt.target.value});
   }
 
-  _setFilter(keyValObj) {
-    this.setState(keyValObj);
+  _setFilter({filter, value}) {
+    let filterObj = {}
+    filterObj[filter] = value;
+    this.setState(filterObj);
     this._clearCurrentPage();
   }
 
