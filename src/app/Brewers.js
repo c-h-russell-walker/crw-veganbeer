@@ -1,7 +1,5 @@
 import { autobind } from 'core-decorators';
-
-// TODO - was able to leverage `debounce()` earlier
-// import { debounce } from '../helpers/debounce';
+import {debounce} from 'throttle-debounce';
 
 import { currentTimestamp } from '../helpers/currentTimestamp';
 import { baseUrl } from '../constants/constants';
@@ -24,6 +22,8 @@ class Brewers extends Component {
       filterText: '',
       filterCity: ''
     };
+
+    this._setFilter = debounce(250, this._setFilter);
   }
 
   render() {
@@ -31,14 +31,12 @@ class Brewers extends Component {
       <div className="brewers">
         <input placeholder="Filter by Brewery"
                ref="searchText"
-               value={this.state.filterText}
-               onChange={this._handleFilter}
+               onChange={this._handleNameFilter}
                id="search-text"
                className="filter"
                name="searchText"
                />
         <input placeholder="Filter by City"
-               value={this.state.filterCity}
                onChange={this._handleCityFilter}
                id="search-city"
                className="filter"
@@ -60,14 +58,17 @@ class Brewers extends Component {
   }
 
   @autobind
-  _handleFilter(evt) {
-    this.setState({filterText: evt.target.value});
-    this._clearCurrentPage();
+  _handleNameFilter(evt) {
+    this._setFilter({filterText: evt.target.value});
   }
 
   @autobind
   _handleCityFilter(evt) {
-    this.setState({filterCity: evt.target.value});
+    this._setFilter({filterCity: evt.target.value});
+  }
+
+  _setFilter(keyValObj) {
+    this.setState(keyValObj);
     this._clearCurrentPage();
   }
 
