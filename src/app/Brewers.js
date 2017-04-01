@@ -37,6 +37,7 @@ class Brewers extends Component {
                name="searchText"
                />
         <input placeholder="Filter by City"
+               ref="searchCity"
                onChange={this._handleCityFilter}
                id="search-city"
                className="filter"
@@ -86,6 +87,8 @@ class Brewers extends Component {
 
   @autobind
   _clearFilters() {
+    this.refs.searchText.value = '';
+    this.refs.searchCity.value = '';
     this.setState({
       filterText: '',
       filterCity: '',
