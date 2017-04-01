@@ -1,5 +1,7 @@
 import { autobind } from 'core-decorators';
 
+import { preventDefault } from '../decorators/decorators';
+
 import React, { Component } from 'react';
 
 class Button extends Component {
@@ -12,8 +14,8 @@ class Button extends Component {
   }
 
   @autobind
+  @preventDefault
   _handleClick(evt) {
-    evt.preventDefault();
     this.props.callback();
   }
 }
