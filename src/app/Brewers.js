@@ -68,17 +68,27 @@ class Brewers extends Component {
     this._setFilter({filter: 'filterCity', value: evt.target.value});
   }
 
+  _checkFiltersForValues() {
+    return Object.values(this.refs).filter(ref => ref.value).length;
+  }
+
   _setFilter({filter, value}) {
     let filterObj = {}
     filterObj[filter] = value;
     this.setState(filterObj);
-    this._clearCurrentPage();
+    if (this._checkFiltersForValues()) {
+      this._clearCurrentPage();
+    } else {
+      this._setCurrentPage();
+    }
   }
 
   _clearCurrentPage() {
-    // TODO - Pretty big - have to deal with UX/logic of pages and filters
-    // do they interact or are they independent??
-    this.setState({currentPage: ''});
+    this._setCurrentPage('');
+  }
+
+  _setCurrentPage(currentPage=self.sessionStorage.getItem('currentPage')) {
+    this.setState({currentPage});
   }
 
   @autobind
@@ -159,7 +169,7 @@ class Brewers extends Component {
         curr = 'A';
         self.sessionStorage.setItem('currentPage', curr);
       }
-      this.setState({currentPage: curr});
+      this._setCurrentPage(curr);
     }
   }
 
