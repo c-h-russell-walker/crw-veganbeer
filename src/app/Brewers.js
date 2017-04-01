@@ -81,8 +81,8 @@ class Brewers extends Component {
 
   @autobind
   _handlePageClick(evt) {
-    this.setState({currentPage: evt.target.value});
     self.sessionStorage.setItem('currentPage', evt.target.value);
+    this._clearFilters();
   }
 
   @autobind
