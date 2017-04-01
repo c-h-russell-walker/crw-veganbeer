@@ -14,14 +14,9 @@ import Button from './Button';
 import NoResults from './NoResults';
 import Paginator from './Paginator';
 
-/*
-  TODO - this file is getting too big - 'code smell' - break it up
-*/
-
 class Brewers extends Component {
   constructor() {
     super();
-    this.pages = [];
     this.state = {
       barnivoreUrl: `${baseUrl}beer.json`,
       brewers: [],
@@ -52,7 +47,7 @@ class Brewers extends Component {
         <Button displayText={'Clear Filters'}
                 callback={this._clearFilters}
                 />
-        <Paginator pages={this.state.pages}
+        <Paginator brewers={this.state.brewers}
                    current={this.state.currentPage}
                    callback={this._handlePageClick} />
         <div className={(this.state.brewers.length ? 'hidden' : '')}>
@@ -159,51 +154,6 @@ class Brewers extends Component {
         self.sessionStorage.setItem('currentPage', curr);
       }
       this.setState({currentPage: curr});
-    }
-  }
-
-  componentDidUpdate() {
-    const digit = 'Digit';
-    const other = 'Other';
-    const numericReg = /^\d$/;
-    const alphaReg = /^[a-zA-Z]$/;
-
-    // TODO - Is this where this should go (componentDidUpdate)?
-    let havePages = this.state.pages && this.state.pages.length;
-    let haveBrewers = this.state.brewers && this.state.brewers.length;
-    if (!havePages && haveBrewers) {
-      // `map` creates array of uppercase first characters
-      // then we use a Set to get rid of dupes
-      // lastly we destructure into a literal array, literally.
-      // TODO - damn you IE, check for support and/or transpiling of `new Set()` and methods
-      let pageArray = this.state.brewers.map((br) => {
-        let companyInitial = br.company_name[0];
-        if (numericReg.test(companyInitial)) {
-          return digit;
-        } else if (alphaReg.test(companyInitial)) {
-          return companyInitial.toUpperCase();
-        } else {
-          return other;
-        }
-      });
-
-      let pageSet = new Set(pageArray);
-
-      // Let's put 'Digit' at the end
-      if (pageSet.has(digit)) {
-        pageSet.delete(digit);
-        pageSet.add(digit);
-      }
-
-      // If we have any 'Other' values let's put that after Digit
-      if (pageSet.has(other)) {
-        pageSet.delete(other);
-        pageSet.add(other);
-      }
-
-      this.setState({
-        pages: [...pageSet]
-      });
     }
   }
 
