@@ -4,12 +4,12 @@ import {debounce} from 'throttle-debounce';
 import { currentTimestamp } from '../helpers/currentTimestamp';
 import { baseUrl } from '../constants/constants';
 
-import logo from '../logo.svg';
 import React, { Component } from 'react';
 
 import Brewery from './Brewery';
 import Button from './Button';
 import NoResults from './NoResults';
+import Loader from './Loader';
 import Paginator from './Paginator';
 
 class Brewers extends Component {
@@ -49,10 +49,7 @@ class Brewers extends Component {
         <Paginator brewers={this.state.brewers}
                    current={this.state.currentPage}
                    callback={this._handlePageClick} />
-        <div className={(this.state.brewers.length ? 'hidden' : '')}>
-          <img src={logo} className='app-logo' alt="logo" />
-          <p className='loading'>Loading</p>
-        </div>
+        <Loader hidden={this.state.brewers.length} />
         {this._renderBrewers()}
       </div>
     );
