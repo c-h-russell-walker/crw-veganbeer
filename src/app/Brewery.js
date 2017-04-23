@@ -16,8 +16,8 @@ class Brewery extends Component {
   }
 
   render() {
+    /* TODO - address difference between margin and/or &nbsp; */
     const brewery = this.props.brewer;
-    {/* TODO - address difference between margin and/or &nbsp; */}
     return (
       <div className="brewery">
         <ColoredCircle circleColor={brewery.red_yellow_green} />
