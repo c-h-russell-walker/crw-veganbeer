@@ -2,12 +2,22 @@ $react-blue: #61DAFB;
 $green: green;
 $red: red;
 $yellow: gold; // #FFD700
+$thatLittleBit: 1.2em;
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
 
 .button {
   cursor: pointer;
-  margin: 1.2em;
+  margin: $thatLittleBit;
   padding: 0.6em;
   font-size: 0.8em;
+  background-color: #DDD;
+  @include border-radius(0.4em);
 }
 
 #app {
@@ -41,8 +51,9 @@ $yellow: gold; // #FFD700
   }
 
   .brewers {
+    padding-bottom: $thatLittleBit;
     .filter {
-      margin: 1.2em;
+      margin: $thatLittleBit;
       padding: 0.6em;
       font-size: 0.8em;
     }
@@ -127,7 +138,7 @@ $yellow: gold; // #FFD700
   }
 
   .loading {
-    margin-left: 1.2em;
+    margin-left: $thatLittleBit;
     &:after {
       overflow: hidden;
       display: inline-block;
