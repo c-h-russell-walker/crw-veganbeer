@@ -7,7 +7,7 @@ class DateRetrieved extends Component {
     return (
       <div>
         Generated with <a target="_blank" href="http://www.barnivore.com">Barnivore</a> data from
-        &nbsp;<time dateTime={this.formattedDateTime()}>{this.retrievedDate()}</time>
+        &nbsp;<time id="date-retrieved-time" dateTime={this.formattedDateTime()}>{this.retrievedDate()}</time>
       </div>
     );
   }
