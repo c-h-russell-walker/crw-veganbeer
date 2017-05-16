@@ -7,8 +7,8 @@ class Product extends Component {
     return (
       <div className='product'>
         <ColoredCircle circleColor={this.props.product.red_yellow_green} />
-        <span>{this.props.product.product_name}</span>
-        <span className="status product-status">{this.props.product.status}</span>
+        <span id="product-name">{this.props.product.product_name}</span>
+        <span id="product-status" className="status product-status">{this.props.product.status}</span>
       </div>
     );
   }
