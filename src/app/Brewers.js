@@ -45,6 +45,7 @@ class Brewers extends Component {
                />
         <Button displayText={'Clear Filters'}
                 callback={this._clearFilters}
+                disabled={!this._checkFiltersForValues()}
                 />
         <Paginator brewers={this.state.brewers}
                    current={this.state.currentPage}

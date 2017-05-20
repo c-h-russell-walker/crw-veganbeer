@@ -18,6 +18,9 @@ $thatLittleBit: 1.2em;
   font-size: 0.8em;
   background-color: #DDD;
   @include border-radius(0.4em);
+  &:disabled {
+    cursor: default;
+  }
 }
 
 #app {
