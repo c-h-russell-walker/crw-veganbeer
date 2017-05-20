@@ -184,7 +184,7 @@ class Brewers extends Component {
       this.setState({ brewers });
       const timestamp = currentTimestamp();
       self.localStorage.setItem('retrievedTimestamp', timestamp);
-      this.props.timestampHandler(timestamp);
+      this.props.updateDateRetrieved(timestamp);
       self.localStorage.setItem('beerInfo', JSON.stringify(brewers));
     });
   }

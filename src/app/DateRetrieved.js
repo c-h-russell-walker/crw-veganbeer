@@ -21,8 +21,8 @@ class DateRetrieved extends Component {
   }
 
   retrievedDate() {
-    let timestamp = this.props.retrievedTimestamp || currentTimestamp();
-    return new Date(parseInt(timestamp, 10)).toLocaleDateString('en-US');
+    let timestamp = parseInt(this.props.retrievedTimestamp, 10);
+    return new Date(timestamp).toLocaleDateString('en-US');
   }
 }
 

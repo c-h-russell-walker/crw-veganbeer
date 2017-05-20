@@ -1,22 +1,21 @@
-import { autobind } from 'core-decorators';
 import React, {Component} from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as dateRetrievedActions from '../actions/date-retrieved-actions';
 
 import '../App.scss';
 
 import DateRetrieved from './DateRetrieved';
 import Brewers from './Brewers';
 
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      retrievedTimestamp: self.localStorage.getItem('retrievedTimestamp')
+      retrievedTimestamp: null
     };
-  }
-
-  @autobind
-  timestampHandler(retrievedTimestamp) {
-    this.setState({retrievedTimestamp});
   }
 
   render() {
@@ -24,15 +23,28 @@ class App extends Component {
       <div id="app">
         <div className="app-header">
           <h2>Welcome to VeganBeer</h2>
-          <DateRetrieved retrievedTimestamp={this.state.retrievedTimestamp} />
+          <DateRetrieved retrievedTimestamp={this.props.retrievedTimestamp} />
         </div>
         <Brewers
-          retrievedTimestamp={this.state.retrievedTimestamp}
-          timestampHandler={this.timestampHandler}
+          retrievedTimestamp={this.props.retrievedTimestamp}
+          updateDateRetrieved={this.props.actions.updateDateRetrieved}
         />
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state, props) {
+  return {
+    retrievedTimestamp: state.retrievedTimestamp
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(dateRetrievedActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
