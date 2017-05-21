@@ -1,8 +1,10 @@
-import retrievedTimestamp from './retrieved-timestamp-reducer.js';
+import retrievedTimestamp from './retrieved-timestamp-reducer';
+import currentPage from './current-page-reducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-  retrievedTimestamp
+  retrievedTimestamp,
+  currentPage
 });
 
 export default rootReducer;

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as dateRetrievedActions from '../actions/date-retrieved-actions';
+import * as currentPageActions from '../actions/current-page-actions';
 
 import '../App.scss';
 
@@ -14,7 +15,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      retrievedTimestamp: null
+      retrievedTimestamp: null,
+      currentPage: null,
     };
   }
 
@@ -28,6 +30,8 @@ class App extends Component {
         <Brewers
           retrievedTimestamp={this.props.retrievedTimestamp}
           updateDateRetrieved={this.props.actions.updateDateRetrieved}
+          currentPage={this.props.currentPage}
+          updateCurrentPage={this.props.actions.updateCurrentPage}
         />
       </div>
     );
@@ -36,13 +40,20 @@ class App extends Component {
 
 function mapStateToProps(state, props) {
   return {
-    retrievedTimestamp: state.retrievedTimestamp
+    retrievedTimestamp: state.retrievedTimestamp,
+    currentPage: state.currentPage,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(dateRetrievedActions, dispatch)
+    actions: bindActionCreators(
+      {
+        ...dateRetrievedActions,
+        ...currentPageActions,
+      },
+      dispatch
+    )
   }
 }
 

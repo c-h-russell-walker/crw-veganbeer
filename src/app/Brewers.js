@@ -18,7 +18,6 @@ class Brewers extends Component {
     this.state = {
       barnivoreUrl: `${baseUrl}beer.json`,
       brewers: [],
-      currentPage: '',
       filterText: '',
       filterCity: ''
     };
@@ -48,7 +47,7 @@ class Brewers extends Component {
                 disabled={!this._checkFiltersForValues()}
                 />
         <Paginator brewers={this.state.brewers}
-                   current={this.state.currentPage}
+                   current={this.props.currentPage}
                    callback={this._handlePageClick} />
         <Loader hidden={this.state.brewers.length} />
         {this._renderBrewers()}
@@ -77,21 +76,22 @@ class Brewers extends Component {
     if (this._checkFiltersForValues()) {
       this._clearCurrentPage();
     } else {
-      this._setCurrentPage();
+      this._setCurrentPageFromSession();
     }
   }
 
   _clearCurrentPage() {
-    this._setCurrentPage('');
+    this.props.updateCurrentPage('');
   }
 
-  _setCurrentPage(currentPage=self.sessionStorage.getItem('currentPage')) {
-    this.setState({currentPage});
+  _setCurrentPageFromSession() {
+    // If we've cleared the currentPage before and it's an empty string we can get what was in storage
+    this.props.updateCurrentPage(self.sessionStorage.getItem('currentPage'));
   }
 
   @autobind
   _handlePageClick(evt) {
-    self.sessionStorage.setItem('currentPage', evt.target.value);
+    this.props.updateCurrentPage(evt.target.value);
     this._clearFilters();
   }
 
@@ -102,8 +102,8 @@ class Brewers extends Component {
     this.setState({
       filterText: '',
       filterCity: '',
-      currentPage: self.sessionStorage.getItem('currentPage'),
     });
+    this._setCurrentPageFromSession();
   }
 
   _renderBrewers() {
@@ -123,14 +123,14 @@ class Brewers extends Component {
       const numericReg = /^\d$/;
       const alphaNumericReg = /^[a-zA-Z0-9]$/;
       return breweries.filter((br) => {
-          if (this.state.currentPage === 'Digit') {
+          if (this.props.currentPage === 'Digit') {
             return numericReg.test(br.company_name[0])
-          } else if (this.state.currentPage === 'Other') {
+          } else if (this.props.currentPage === 'Other') {
             return !alphaNumericReg.test(br.company_name[0])
           } else {
             // TODO - filter with regex
               // if we did that we could also avoid the toUpperCase() and use `i`
-            return br.company_name.toUpperCase().startsWith(this.state.currentPage)
+            return br.company_name.toUpperCase().startsWith(this.props.currentPage)
           }
         }).map((brewer) => {
             return <Brewery key={brewer.id} brewer={brewer} />
@@ -159,15 +159,6 @@ class Brewers extends Component {
       self.localStorage.clear();
     } else {
       this.setState({ brewers: beerInfo});
-    }
-
-    if (!this.state.currentPage) {
-      let curr = self.sessionStorage.getItem('currentPage');
-      if (!curr) {
-        curr = 'A';
-        self.sessionStorage.setItem('currentPage', curr);
-      }
-      this._setCurrentPage(curr);
     }
   }
 
