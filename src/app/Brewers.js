@@ -182,9 +182,7 @@ class Brewers extends Component {
     response.json().then(response => {
       const brewers = response.map(x => x.company);
       this.setState({ brewers });
-      const timestamp = currentTimestamp();
-      self.localStorage.setItem('retrievedTimestamp', timestamp);
-      this.props.updateDateRetrieved(timestamp);
+      this.props.updateDateRetrieved(currentTimestamp());
       self.localStorage.setItem('beerInfo', JSON.stringify(brewers));
     });
   }

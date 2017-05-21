@@ -7,7 +7,17 @@ import configureStore from './store/configure-store';
 
 import './index.css';
 
-const store = configureStore();
+// Get any localStorage data and use for initialState
+const initialState = {
+  retrievedTimestamp: self.localStorage.getItem('retrievedTimestamp')
+};
+
+const store = configureStore(initialState);
+
+store.subscribe(() => {
+  let currentState = store.getState();
+  self.localStorage.setItem('retrievedTimestamp', currentState.retrievedTimestamp);
+});
 
 ReactDOM.render(
   <Provider store={store}>
