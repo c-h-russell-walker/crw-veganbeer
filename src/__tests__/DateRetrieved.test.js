@@ -6,6 +6,7 @@ import DateRetrieved from '../app/DateRetrieved';
 
 describe('DateRetrieved', () => {
   const testTimestamp = + new Date('6/26/2017');
+  const testDateObj = new Date(testTimestamp);
   const component = TestUtils.renderIntoDocument(
     <DateRetrieved retrievedTimestamp={testTimestamp} />
   );
@@ -15,8 +16,8 @@ describe('DateRetrieved', () => {
   });
 
   it('should have working date format functions', () => {
-    expect(component.retrievedDate()).toBe('6/26/2017');
-    expect(component.formattedDateTime()).toBe('2017-06-26');
+    expect(component.retrievedDate(testDateObj)).toBe('6/26/2017');
+    expect(component.formattedDateTime(testDateObj)).toBe('2017-06-26');
   });
 
   const domComponent = ReactDOM.findDOMNode(component);
@@ -24,8 +25,8 @@ describe('DateRetrieved', () => {
   it('should have a <time> element', () => {
     const timeEl = domComponent.children.namedItem('date-retrieved-time');
     expect(timeEl).toBeTruthy();
-    expect(timeEl.textContent).toEqual(component.retrievedDate());
-    expect(timeEl.dateTime).toEqual(component.formattedDateTime());
+    expect(timeEl.textContent).toEqual(component.retrievedDate(testDateObj));
+    expect(timeEl.dateTime).toEqual(component.formattedDateTime(testDateObj));
   });
 
 });
