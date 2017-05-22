@@ -55,6 +55,7 @@
     "jest": "^18.1.0",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
+    "object.values": "^1.0.4",
     "promise": "7.1.1",
     "react-addons-test-utils": "^15.5.1",
     "rimraf": "2.5.4",
