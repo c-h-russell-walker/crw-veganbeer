@@ -1,5 +1,7 @@
 import { autobind } from 'core-decorators';
 
+import { ignoreStringPrefix } from '../helpers/ignoreStringPrefix';
+
 import React, { Component } from 'react';
 
 import Pagination from './Pagination';
@@ -24,7 +26,7 @@ class Paginator extends Component {
       // lastly we destructure into a literal array, literally.
       // TODO - damn you IE, check for support and/or transpiling of `new Set()` and methods
       let pageArray = this.props.brewers.map((br) => {
-        let companyInitial = br.company_name[0];
+        let companyInitial = ignoreStringPrefix(br.company_name, 'The ')[0];
         if (this.numericReg.test(companyInitial)) {
           return this.digit;
         } else if (this.alphaReg.test(companyInitial)) {

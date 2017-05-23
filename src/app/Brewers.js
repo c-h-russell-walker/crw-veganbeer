@@ -2,6 +2,7 @@ import { autobind } from 'core-decorators';
 import {debounce} from 'throttle-debounce';
 
 import { currentTimestamp } from '../helpers/currentTimestamp';
+import { ignoreStringPrefix } from '../helpers/ignoreStringPrefix';
 import { baseUrl } from '../constants/constants';
 
 import React, { Component } from 'react';
@@ -108,6 +109,11 @@ class Brewers extends Component {
 
   _renderBrewers() {
     let breweries = this.state.brewers;
+
+    // Sort array by company name - we want to remove "The "
+    breweries.sort(function (a, b) {
+      return ignoreStringPrefix(a.company_name, 'The ').localeCompare(ignoreStringPrefix(b.company_name, 'The '));
+    });
     if (this.state.filterText.length > 2) {
       let filterText = this.state.filterText.trim();
       breweries = breweries.filter(x => new RegExp(filterText, 'i').test(x.company_name));
@@ -130,7 +136,7 @@ class Brewers extends Component {
           } else {
             // TODO - filter with regex
               // if we did that we could also avoid the toUpperCase() and use `i`
-            return br.company_name.toUpperCase().startsWith(this.props.currentPage)
+            return ignoreStringPrefix(br.company_name, 'The ').toUpperCase().startsWith(this.props.currentPage);
           }
         }).map((brewer) => {
             return <Brewery key={brewer.id} brewer={brewer} />
