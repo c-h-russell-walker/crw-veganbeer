@@ -1,8 +1,8 @@
-import * as types from './action-types';
+import { UPDATE_TIME_RETRIEVED } from './action-types';
 
 export const updateDateRetrieved = (retrievedTimestamp) => {
   return {
-    type: types.UPDATE_TIME_RETRIEVED,
+    type: UPDATE_TIME_RETRIEVED,
     retrievedTimestamp
   };
 }

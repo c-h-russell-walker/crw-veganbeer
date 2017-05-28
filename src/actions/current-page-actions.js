@@ -1,8 +1,8 @@
-import * as types from './action-types';
+import { UPDATE_CURRENT_PAGE } from './action-types';
 
 export const updateCurrentPage = (currentPage) => {
   return {
-    type: types.UPDATE_CURRENT_PAGE,
+    type: UPDATE_CURRENT_PAGE,
     currentPage
   };
 }

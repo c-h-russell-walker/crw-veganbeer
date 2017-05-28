@@ -18,7 +18,6 @@ class Brewers extends Component {
     super();
     this.state = {
       barnivoreUrl: `${baseUrl}beer.json`,
-      brewers: [],
       filterText: '',
       filterCity: ''
     };
@@ -47,10 +46,10 @@ class Brewers extends Component {
                 callback={this._clearFilters}
                 disabled={!this._checkFiltersForValues()}
                 />
-        <Paginator brewers={this.state.brewers}
+        <Paginator brewers={this.props.brewers}
                    current={this.props.currentPage}
                    callback={this._handlePageClick} />
-        <Loader hidden={this.state.brewers.length} />
+        <Loader hidden={this.props.brewers.length} />
         {this._renderBrewers()}
       </div>
     );
@@ -108,7 +107,7 @@ class Brewers extends Component {
   }
 
   _renderBrewers() {
-    let breweries = this.state.brewers;
+    let breweries = this.props.brewers;
 
     // Sort array by company name - we want to remove "The "
     breweries.sort(function (a, b) {
@@ -164,7 +163,7 @@ class Brewers extends Component {
       this._fetchBeerInfo();
       self.localStorage.clear();
     } else {
-      this.setState({ brewers: beerInfo});
+      this.props.updateBreweries(beerInfo);
     }
   }
 
@@ -178,9 +177,9 @@ class Brewers extends Component {
   _handleFetchBeerInfo(response) {
     response.json().then(response => {
       const brewers = response.map(x => x.company);
-      this.setState({ brewers });
-      this.props.updateDateRetrieved(currentTimestamp());
+      this.props.updateBreweries(brewers);
       self.localStorage.setItem('beerInfo', JSON.stringify(brewers));
+      this.props.updateDateRetrieved(currentTimestamp());
     });
   }
 

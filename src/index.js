@@ -9,6 +9,7 @@ import './index.css';
 
 // Get any localStorage/sessionStorage data and use for initialState
 const initialState = {
+  breweries: [],
   retrievedTimestamp: self.localStorage.getItem('retrievedTimestamp'),
   currentPage: self.sessionStorage.getItem('currentPage') || 'A',
 };

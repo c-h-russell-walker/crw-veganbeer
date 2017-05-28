@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as breweriesActions from '../actions/breweries-actions';
 import * as dateRetrievedActions from '../actions/date-retrieved-actions';
 import * as currentPageActions from '../actions/current-page-actions';
 
@@ -15,6 +16,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      brewers: [],
       retrievedTimestamp: null,
       currentPage: null,
     };
@@ -32,6 +34,8 @@ class App extends Component {
           updateDateRetrieved={this.props.actions.updateDateRetrieved}
           currentPage={this.props.currentPage}
           updateCurrentPage={this.props.actions.updateCurrentPage}
+          brewers={this.props.brewers}
+          updateBreweries={this.props.actions.updateBreweries}
         />
       </div>
     );
@@ -40,6 +44,7 @@ class App extends Component {
 
 function mapStateToProps(state, props) {
   return {
+    brewers: state.breweries,
     retrievedTimestamp: state.retrievedTimestamp,
     currentPage: state.currentPage,
   };
@@ -49,6 +54,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       {
+        ...breweriesActions,
         ...dateRetrievedActions,
         ...currentPageActions,
       },
