@@ -13,6 +13,8 @@ const initialState = {
   currentPage: self.sessionStorage.getItem('currentPage') || 'A',
 };
 
+self.sessionStorage.setItem('currentPage', initialState.currentPage);
+
 const store = configureStore(initialState);
 
 store.subscribe(() => {
