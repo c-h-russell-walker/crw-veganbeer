@@ -10,7 +10,7 @@ class Paginator extends Component {
   constructor() {
     super();
     this.state = {
-      pages: undefined
+      pages: []
     };
 
     this.digit = 'Digit';
@@ -20,7 +20,7 @@ class Paginator extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.brewers.length && !this.state.pages) {
+    if (this.props.brewers.length && !this.state.pages.length) {
       // `map` creates array of uppercase first characters
       // then we use a Set to get rid of dupes
       // lastly we destructure into a literal array, literally.
@@ -65,16 +65,14 @@ class Paginator extends Component {
   }
 
   _renderPages() {
-    if (this.state.pages) {
-      return this.state.pages.map((page) => {
-        return (
-          <Pagination page={page}
-                      key={page}
-                      current={this.props.current}
-                      callback={this._handleClick} />
-        );
-      });
-    }
+    return this.state.pages.map((page) => {
+      return (
+        <Pagination page={page}
+                    key={page}
+                    current={this.props.current}
+                    callback={this._handleClick} />
+      );
+    });
   }
 
   @autobind
