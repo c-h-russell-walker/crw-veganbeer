@@ -21,32 +21,32 @@ class Paginator extends Component {
 
   componentDidUpdate() {
     if (this.props.brewers.length && !this.state.pages.length) {
-      // `map` creates array of uppercase first characters
-      // then we use a Set to get rid of dupes
-      // lastly we destructure into a literal array, literally.
+      // We use a Set to assure there's no dupes (and use flags to add other & digit to end of Set)
+      // lastly we destructure into an array (from the Set)
       // TODO - damn you IE, check for support and/or transpiling of `new Set()` and methods
-      let pageArray = this.props.brewers.map((br) => {
+
+      let pageSet = new Set();
+      let digitFlag = false;
+      let otherFlag = false;
+
+      this.props.brewers.forEach((br) => {
         let companyInitial = ignoreStringPrefix(br.company_name, 'The ')[0];
-        if (this.numericReg.test(companyInitial)) {
-          return this.digit;
-        } else if (this.alphaReg.test(companyInitial)) {
-          return companyInitial.toUpperCase();
-        } else {
-          return this.other;
+        if (this.alphaReg.test(companyInitial)) {
+          pageSet.add(companyInitial.toUpperCase());
+        } else if (!digitFlag && this.numericReg.test(companyInitial)) {
+          digitFlag = true;
+        } else if (!otherFlag) {
+          otherFlag = true;
         }
       });
 
-      let pageSet = new Set(pageArray);
-
       // Let's put 'Digit' at the end
-      if (pageSet.has(this.digit)) {
-        pageSet.delete(this.digit);
+      if (digitFlag) {
         pageSet.add(this.digit);
       }
 
       // If we have any 'Other' values let's put that after Digit
-      if (pageSet.has(this.other)) {
-        pageSet.delete(this.other);
+      if (otherFlag) {
         pageSet.add(this.other);
       }
 
