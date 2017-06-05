@@ -12,14 +12,6 @@ import Brewers from './Brewers';
 
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      retrievedTimestamp: null,
-      currentPage: null,
-    };
-  }
-
   render() {
     return (
       <div id="app">
