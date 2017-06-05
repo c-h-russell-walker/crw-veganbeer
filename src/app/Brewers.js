@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 
 import Brewery from './Brewery';
 import Button from './Button';
+import Checkbox from './Checkbox';
 import NoResults from './NoResults';
 import Loader from './Loader';
 import Paginator from './Paginator';
@@ -20,7 +21,8 @@ class Brewers extends Component {
       barnivoreUrl: `${baseUrl}beer.json`,
       brewers: [],
       filterText: '',
-      filterCity: ''
+      filterCity: '',
+      veganOnly: false,
     };
 
     this._setFilter = debounce(250, this._setFilter);
@@ -47,6 +49,9 @@ class Brewers extends Component {
                 callback={this._clearFilters}
                 disabled={!this._checkFiltersForValues()}
                 />
+        <Checkbox checked={this.state.veganOnly}
+                  displayText={'Show only totally vegan'}
+                  callback={this._setVeganOnly} />
         <Paginator brewers={this.state.brewers}
                    current={this.props.currentPage}
                    callback={this._handlePageClick} />
@@ -54,6 +59,11 @@ class Brewers extends Component {
         {this._renderBrewers()}
       </div>
     );
+  }
+
+  @autobind
+  _setVeganOnly() {
+    this.setState({veganOnly: !this.state.veganOnly});
   }
 
   @autobind
@@ -122,6 +132,10 @@ class Brewers extends Component {
     if (this.state.filterCity.length > 2) {
       let filterCity = this.state.filterCity.trim();
       breweries = breweries.filter(x => new RegExp(filterCity, 'i').test(x.city));
+    }
+
+    if (this.state.veganOnly) {
+      breweries = breweries.filter(x => x.red_yellow_green === 'Green');
     }
 
     let filtering = this.state.filterCity || this.state.filterText;
