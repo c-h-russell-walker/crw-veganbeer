@@ -34,7 +34,7 @@ class BrewerInfo extends Component {
 
   _renderProducts() {
     return this.state.products.map(function(product) {
-        return <Product key={product.id} product={product} />
+      return <Product key={product.id} product={product} />
     });
   }
 
@@ -66,8 +66,10 @@ class BrewerInfo extends Component {
   }
 
   _setBrewerData(brewerInfo, products) {
-    this.setState({ brewerInfo });
-    this.setState({ products });
+    this.setState({
+      brewerInfo,
+      products
+    });
   }
 
   _storeBrewerData(companyId, company) {

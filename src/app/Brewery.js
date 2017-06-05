@@ -40,9 +40,9 @@ class Brewery extends Component {
   _handleInfoClick() {
     if (!this.state.moreInfo) {
       this.setState({
+        moreInfoHidden: false,
         moreInfo: <BrewerInfo brewerId={this.props.brewer.id} />
       });
-      this.setState({moreInfoHidden: false});
     } else {
       this.setState({moreInfoHidden: !this.state.moreInfoHidden});
     }
