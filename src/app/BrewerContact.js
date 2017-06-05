@@ -4,15 +4,16 @@ import Telephone from './Telephone';
 
 class BrewerContact extends Component {
   render() {
+    const brewerInfo = this.props.brewerInfo;
     return (
-      <div className={'brewer-contact ' + (this.props.brewerInfo ? '' : 'hidden')}>
+      <div className={'brewer-contact ' + (brewerInfo ? '' : 'hidden')}>
         {/* TODO - style this address */}
         <address>
           {this._renderAddress()}
           {/* TODO - make this into its own component? */}
-          <span className={(this.props.brewerInfo.country === 'USA' ? 'hidden' : '' )}>{this.props.brewerInfo.country}</span>
+          <span className={(brewerInfo.country === 'USA' ? 'hidden' : '' )}>{brewerInfo.country}</span>
         </address>
-        <Telephone phone={this.props.brewerInfo.phone} />
+        <Telephone phone={brewerInfo.phone} />
       </div>
     );
   }

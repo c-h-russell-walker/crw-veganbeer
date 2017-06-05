@@ -17,18 +17,19 @@ class Brewery extends Component {
 
   render() {
     /* TODO - address difference between margin and/or &nbsp; */
-    const brewery = this.props.brewer;
+    const { red_yellow_green, company_name, status } = this.props.brewer;
+    const { tag, id } = this.props.brewer;
     return (
       <div className="brewery">
-        <ColoredCircle circleColor={brewery.red_yellow_green} />
-        <span><a target="_blank" href={this.breweryUrl()}>{brewery.company_name}</a></span>
+        <ColoredCircle circleColor={red_yellow_green} />
+        <span><a target="_blank" href={this.breweryUrl()}>{company_name}</a></span>
         -
-        <span className="status brewery-status">{brewery.status}</span>
+        <span className="status brewery-status">{status}</span>
         <span className='more-info'
               onClick={this._handleInfoClick}>Quick Details</span>
         -
         &nbsp;
-        <BarnivoreLink tag={this.props.brewer.tag} id={this.props.brewer.id} />
+        <BarnivoreLink tag={tag} id={id} />
         <div className={this.state.moreInfoHidden ? 'hidden' : ''}>
           {this.state.moreInfo}
         </div>

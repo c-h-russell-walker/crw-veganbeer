@@ -4,11 +4,12 @@ import React, { Component } from 'react';
 
 class Pagination extends Component {
   render() {
+    const { page, current } = this.props;
     return (
       <button onClick={this._handleClick}
-              value={this.props.page}
-              className={`pager ${(this.props.page === this.props.current) ? 'current-page' : ''}`}
-              type="button">{this.props.page}</button>
+              value={page}
+              className={`pager ${(page === current) ? 'current-page' : ''}`}
+              type="button">{page}</button>
     );
   }
 
