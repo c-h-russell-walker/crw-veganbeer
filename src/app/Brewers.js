@@ -24,6 +24,7 @@ class Brewers extends Component {
     };
 
     this._setFilter = debounce(250, this._setFilter);
+    this.FILTER_LENGTH = 2;
   }
 
   render() {
@@ -45,7 +46,7 @@ class Brewers extends Component {
                />
         <Button displayText={'Clear Filters'}
                 callback={this._clearFilters}
-                disabled={!this._checkFiltersForValues()}
+                disabled={!this._checkFiltersForValues(0)}
                 />
         <Paginator brewers={this.state.brewers}
                    current={this.props.currentPage}
@@ -58,7 +59,11 @@ class Brewers extends Component {
 
   @autobind
   _handleNameFilter(evt) {
-    this._setFilter({filter: 'filterText', value: evt.target.value});
+    if (evt.target.value.length > this.FILTER_LENGTH) {
+      this._setFilter({filter: 'filterText', value: evt.target.value});
+    } else {
+      this._setFilter({filter: 'filterText', value: ''});
+    }
   }
 
   @autobind
@@ -66,8 +71,8 @@ class Brewers extends Component {
     this._setFilter({filter: 'filterCity', value: evt.target.value});
   }
 
-  _checkFiltersForValues() {
-    return Object.values(this.refs).filter(ref => ref.value).length;
+  _checkFiltersForValues(inputLength=this.FILTER_LENGTH) {
+    return Object.values(this.refs).filter(ref => ref.value.length > inputLength).length;
   }
 
   _setFilter({filter, value}) {
