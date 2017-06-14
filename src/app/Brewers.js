@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 
 import Brewery from './Brewery';
 import Button from './Button';
+import Checkbox from './Checkbox';
 import NoResults from './NoResults';
 import Loader from './Loader';
 import Paginator from './Paginator';
@@ -17,11 +18,15 @@ class Brewers extends Component {
   constructor() {
     super();
     this.state = {
-      barnivoreUrl: `${baseUrl}beer.json`,
-      brewers: [],
+      currentType: 'beer',
+      beerInfo: [],
+      liquorInfo: [],
+      wineInfo: [],
       filterText: '',
       filterCity: ''
     };
+
+    this.liquorTypes = ['beer', 'liquor', 'wine'];
 
     this._setFilter = debounce(250, this._setFilter);
     this.FILTER_LENGTH = 2;
@@ -48,13 +53,28 @@ class Brewers extends Component {
                 callback={this._clearFilters}
                 disabled={!this._checkFiltersForValues(0)}
                 />
-        <Paginator brewers={this.state.brewers}
+        {this._renderTypeCheckboxes()}
+        <Paginator brewers={this.state.beerInfo}
                    current={this.props.currentPage}
                    callback={this._handlePageClick} />
-        <Loader hidden={this.state.brewers.length} />
+        <Loader hidden={this.state.beerInfo.length} />
         {this._renderBrewers()}
       </div>
     );
+  }
+
+  _renderTypeCheckboxes() {
+    return this.liquorTypes.map((liquorType) => {
+      return <Checkbox checked={this.state.currentType === liquorType}
+                       displayText={liquorType}
+                       key={liquorType}
+                       callback={this._handleTypeChange} />
+    });
+  }
+
+  @autobind
+  _handleTypeChange(evt) {
+    this.setState({currentType: evt.target.value});
   }
 
   @autobind
@@ -113,7 +133,7 @@ class Brewers extends Component {
   }
 
   _renderBrewers() {
-    let breweries = this.state.brewers;
+    let breweries = this.state[`${this.state.currentType}Info`];
 
     // Sort array by company name - we want to remove "The "
     breweries.sort(function (a, b) {
@@ -156,17 +176,17 @@ class Brewers extends Component {
   componentDidMount() {
     this.refs.searchText.focus();
 
-    // We'll want to refetch if we deem old enough
     let beerInfo = self.localStorage.getItem('beerInfo');
     beerInfo = beerInfo && JSON.parse(beerInfo);
+    // We'll want to refetch if we deem old enough
     const retrievedTimestamp = parseInt(this.props.retrievedTimestamp, 10);
 
     // If timestamp is less than or equal to 24 hours ago consider it stale
     const staleData = retrievedTimestamp <= new Date(currentTimestamp() - (3600000 * 24));
 
-    if (staleData || !beerInfo) {
+    if (true || staleData || !beerInfo) {
       // Fetching all new data so we clear localStorage w/ individual breweries' products
-      this._fetchBeerInfo();
+      this._fetchLiquorInfo();
       self.localStorage.clear();
     } else {
       this.setState({ brewers: beerInfo});
@@ -174,18 +194,26 @@ class Brewers extends Component {
   }
 
   @autobind
-  _fetchBeerInfo() {
-    fetch(this.state.barnivoreUrl)
-      .then(this._handleFetchBeerInfo, this._handleFetchError);
+  _fetchLiquorInfo(liquorType) {
+    this.liquorTypes.forEach((liquorType) => {
+      fetch(`${baseUrl}${liquorType}.json`)
+        .then(this._handleFetchBeerInfo.bind(this, liquorType), this._handleFetchError);
+    });
   }
 
-  @autobind
-  _handleFetchBeerInfo(response) {
+  _handleFetchBeerInfo(liquorType, response) {
     response.json().then(response => {
-      const brewers = response.map(x => x.company);
-      this.setState({ brewers });
+      const info = response.map(x => x.company);
+      const liquorTypeInfo = {};
+      liquorTypeInfo[`${liquorType}Info`] = info;
+
+      this.setState(liquorTypeInfo);
       this.props.updateDateRetrieved(currentTimestamp());
-      self.localStorage.setItem('beerInfo', JSON.stringify(brewers));
+      try {
+        self.localStorage.setItem(`${liquorType}Info`, JSON.stringify(info));
+      } catch(e) {
+        console.warn(e);
+      }
     });
   }
 
