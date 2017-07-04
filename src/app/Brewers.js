@@ -109,6 +109,8 @@ class Brewers extends Component {
 
   _renderBrewers() {
     let breweries = this.state.brewers;
+    // Fixes issue where we're still waiting on JSON to load from API and already entered a filter
+    const hasBreweries = !!this.state.brewers.length;
 
     // Sort array by company name - we want to remove "The "
     breweries.sort(function (a, b) {
@@ -143,7 +145,7 @@ class Brewers extends Component {
         });
     } else if (breweries.length && filtering) {
       return breweries.map((brewer) => <Brewery key={brewer.id} brewer={brewer} />);
-    } else if (filtering && !breweries.length) {
+    } else if (hasBreweries && filtering && !breweries.length) {
       return <NoResults />
     }
   }
