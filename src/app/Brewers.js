@@ -141,10 +141,10 @@ class Brewers extends Component {
             return ignoreStringPrefix(br.company_name, 'The ').toUpperCase().startsWith(this.props.currentPage);
           }
         }).map((brewer) => {
-            return <Brewery key={brewer.id} brewer={brewer} />
+            return <Brewery key={brewer.id} brewer={brewer} filteringByCity={!!this.state.filterCity} />
         });
     } else if (breweries.length && filtering) {
-      return breweries.map((brewer) => <Brewery key={brewer.id} brewer={brewer} />);
+      return breweries.map((brewer) => <Brewery key={brewer.id} brewer={brewer} filteringByCity={!!this.state.filterCity} />);
     } else if (hasBreweries && filtering && !breweries.length) {
       return <NoResults />
     }

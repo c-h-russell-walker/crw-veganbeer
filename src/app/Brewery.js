@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 
 import BrewerInfo from './BrewerInfo';
 import BarnivoreLink from './BarnivoreLink';
+import CityDetails from './CityDetails';
 import ColoredCircle from './ColoredCircle';
 
 class Brewery extends Component {
@@ -17,8 +18,16 @@ class Brewery extends Component {
 
   render() {
     /* TODO - address difference between margin and/or &nbsp; */
-    const { red_yellow_green, company_name, status } = this.props.brewer;
-    const { tag, id } = this.props.brewer;
+    const {
+      red_yellow_green,
+      company_name,
+      status,
+      city,
+      state,
+      tag,
+      id
+    } = this.props.brewer;
+
     return (
       <div className="brewery">
         <ColoredCircle circleColor={red_yellow_green} />
@@ -30,6 +39,10 @@ class Brewery extends Component {
         -
         &nbsp;
         <BarnivoreLink tag={tag} id={id} />
+        <CityDetails
+          filteringByCity={this.props.filteringByCity && this.state.moreInfoHidden}
+          city={city}
+          state={state} />
         <div className={this.state.moreInfoHidden ? 'hidden' : ''}>
           {this.state.moreInfo}
         </div>
