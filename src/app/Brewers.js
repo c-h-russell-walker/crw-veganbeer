@@ -3,7 +3,7 @@ import {debounce} from 'throttle-debounce';
 
 import { currentTimestamp } from '../helpers/currentTimestamp';
 import { ignoreStringPrefix } from '../helpers/ignoreStringPrefix';
-import { baseUrl } from '../constants/constants';
+import { baseUrl, daysOldData } from '../constants/constants';
 
 import React, { Component } from 'react';
 
@@ -71,7 +71,7 @@ class Brewers extends Component {
   }
 
   _setFilter({filter, value}) {
-    let filterObj = {}
+    let filterObj = {};
     filterObj[filter] = value;
     this.setState(filterObj);
     if (this._checkFiltersForValues()) {
@@ -132,21 +132,21 @@ class Brewers extends Component {
       const alphaNumericReg = /^[a-zA-Z0-9]$/;
       return breweries.filter((br) => {
           if (this.props.currentPage === 'Digit') {
-            return numericReg.test(br.company_name[0])
+            return numericReg.test(br.company_name[0]);
           } else if (this.props.currentPage === 'Other') {
-            return !alphaNumericReg.test(br.company_name[0])
+            return !alphaNumericReg.test(br.company_name[0]);
           } else {
             // TODO - filter with regex
               // if we did that we could also avoid the toUpperCase() and use `i`
             return ignoreStringPrefix(br.company_name, 'The ').toUpperCase().startsWith(this.props.currentPage);
           }
         }).map((brewer) => {
-            return <Brewery key={brewer.id} brewer={brewer} filteringByCity={!!this.state.filterCity} />
+            return <Brewery key={brewer.id} brewer={brewer} filteringByCity={!!this.state.filterCity} />;
         });
     } else if (breweries.length && filtering) {
       return breweries.map((brewer) => <Brewery key={brewer.id} brewer={brewer} filteringByCity={!!this.state.filterCity} />);
     } else if (hasBreweries && filtering && !breweries.length) {
-      return <NoResults />
+      return <NoResults />;
     }
   }
 
@@ -158,8 +158,8 @@ class Brewers extends Component {
     beerInfo = beerInfo && JSON.parse(beerInfo);
     const retrievedTimestamp = parseInt(this.props.retrievedTimestamp, 10);
 
-    // If timestamp is less than or equal to 24 hours ago consider it stale
-    const staleData = retrievedTimestamp <= new Date(currentTimestamp() - (3600000 * 24));
+    // If timestamp is less than or equal to constant (days in seconds)
+    const staleData = retrievedTimestamp <= new Date(currentTimestamp() - daysOldData);
 
     if (staleData || !beerInfo) {
       // Fetching all new data so we clear localStorage w/ individual breweries' products

@@ -17,4 +17,4 @@ function requireLocalStorage(target, key, descriptor) {
     return descriptor;
 }
 
-export { preventDefault, requireLocalStorage }
+export { preventDefault, requireLocalStorage };

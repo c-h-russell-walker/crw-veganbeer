@@ -5,4 +5,4 @@ export const updateDateRetrieved = (retrievedTimestamp) => {
     type: types.UPDATE_TIME_RETRIEVED,
     retrievedTimestamp
   };
-}
+};

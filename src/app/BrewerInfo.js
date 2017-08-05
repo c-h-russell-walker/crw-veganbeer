@@ -34,7 +34,7 @@ class BrewerInfo extends Component {
 
   _renderProducts() {
     return this.state.products.map(function(product) {
-      return <Product key={product.id} product={product} />
+      return <Product key={product.id} product={product} />;
     });
   }
 

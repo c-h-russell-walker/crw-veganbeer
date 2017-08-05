@@ -5,4 +5,4 @@ export const updateCurrentPage = (currentPage) => {
     type: types.UPDATE_CURRENT_PAGE,
     currentPage
   };
-}
+};

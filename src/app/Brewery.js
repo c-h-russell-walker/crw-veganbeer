@@ -63,7 +63,7 @@ class Brewery extends Component {
   }
 
   breweryUrl() {
-    let url = this.props.brewer.url
+    let url = this.props.brewer.url;
     // Prepend protocol agnostic double slash if no protocol present
     return (url.startsWith('http') ? '' : '//') + url;
   }
