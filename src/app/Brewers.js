@@ -97,6 +97,13 @@ class Brewers extends Component {
   }
 
   @autobind
+  refreshData() {
+    this._fetchBeerInfo();
+    self.localStorage.clear();
+    this.setState({'brewers': []});
+  }
+
+  @autobind
   _clearFilters() {
     this.refs.searchText.value = '';
     this.refs.searchCity.value = '';

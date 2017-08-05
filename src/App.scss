@@ -29,12 +29,20 @@ $thatLittleBit: 1.2em;
     padding: 1em 2em;
     color: white;
     text-align: center;
+    h2 {
+      display: inline-block;
+    }
     a {
       color: white;
       &:hover {
         color: $react-blue;
       }
     }
+  }
+
+  #refresh-button {
+    margin: $thatLittleBit / 2;
+    display: inline-block;
   }
 
   // TODO - style much much more

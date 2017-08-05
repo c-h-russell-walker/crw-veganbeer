@@ -17,9 +17,13 @@ class App extends Component {
       <div id="app">
         <div className="app-header">
           <h2>Welcome to VeganBeer</h2>
+          <button id="refresh-button"
+                  className="button"
+                  onClick={() => { this.brewers.refreshData(); }}>Refresh Data</button>
           <DateRetrieved retrievedTimestamp={this.props.retrievedTimestamp} />
         </div>
         <Brewers
+          ref={instance => { this.brewers = instance; }}
           retrievedTimestamp={this.props.retrievedTimestamp}
           updateDateRetrieved={this.props.actions.updateDateRetrieved}
           currentPage={this.props.currentPage}
