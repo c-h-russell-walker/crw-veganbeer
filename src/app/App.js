@@ -12,6 +12,11 @@ import Brewers from './Brewers';
 
 
 class App extends Component {
+
+  refreshData = () => {
+    this.brewers.refreshData();
+  }
+
   render() {
     return (
       <div id="app">
@@ -19,7 +24,7 @@ class App extends Component {
           <h2>Welcome to VeganBeer</h2>
           <button id="refresh-button"
                   className="button"
-                  onClick={() => { this.brewers.refreshData(); }}>Refresh Data</button>
+                  onClick={this.refreshData}>Refresh Data</button>
           <DateRetrieved retrievedTimestamp={this.props.retrievedTimestamp} />
         </div>
         <Brewers

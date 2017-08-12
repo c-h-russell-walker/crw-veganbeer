@@ -1,5 +1,3 @@
-import { autobind } from 'core-decorators';
-
 import React, { Component } from 'react';
 
 import BrewerInfo from './BrewerInfo';
@@ -8,8 +6,8 @@ import CityDetails from './CityDetails';
 import ColoredCircle from './ColoredCircle';
 
 class Brewery extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       moreInfo: null,
       moreInfoHidden: true
@@ -50,8 +48,7 @@ class Brewery extends Component {
     );
   }
 
-  @autobind
-  _handleInfoClick() {
+  _handleInfoClick = () => {
     if (!this.state.moreInfo) {
       this.setState({
         moreInfoHidden: false,

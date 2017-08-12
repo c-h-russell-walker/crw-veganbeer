@@ -14,8 +14,8 @@ import Loader from './Loader';
 import Paginator from './Paginator';
 
 class Brewers extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       barnivoreUrl: `${baseUrl}beer.json`,
       brewers: [],
@@ -56,13 +56,11 @@ class Brewers extends Component {
     );
   }
 
-  @autobind
-  _handleNameFilter(evt) {
+  _handleNameFilter = (evt) => {
     this._setFilter({filter: 'filterText', value: evt.target.value});
   }
 
-  @autobind
-  _handleCityFilter(evt) {
+  _handleCityFilter = (evt) => {
     this._setFilter({filter: 'filterCity', value: evt.target.value});
   }
 
@@ -90,21 +88,18 @@ class Brewers extends Component {
     this.props.updateCurrentPage(self.sessionStorage.getItem('currentPage'));
   }
 
-  @autobind
-  _handlePageClick(evt) {
+  _handlePageClick = (evt) => {
     this.props.updateCurrentPage(evt.target.value);
     this._clearFilters();
   }
 
-  @autobind
-  refreshData() {
+  refreshData = () => {
     this._fetchBeerInfo();
     self.localStorage.clear();
     this.setState({'brewers': []});
   }
 
-  @autobind
-  _clearFilters() {
+  _clearFilters = () => {
     this.refs.searchText.value = '';
     this.refs.searchCity.value = '';
     this.setState({
@@ -120,7 +115,7 @@ class Brewers extends Component {
     const hasBreweries = !!this.state.brewers.length;
 
     // Sort array by company name - we want to remove "The "
-    breweries.sort(function (a, b) {
+    breweries.sort((a, b) => {
       return ignoreStringPrefix(a.company_name, 'The ').localeCompare(ignoreStringPrefix(b.company_name, 'The '));
     });
     if (this.state.filterText.length > 2) {
