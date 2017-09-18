@@ -1,7 +1,9 @@
 {
   "name": "veganbeer",
   "version": "0.1.0",
-  "private": true,
+  "engines": {
+    "node": "6.11.2"
+  },
   "dependencies": {
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
@@ -103,7 +105,10 @@
   "eslintConfig": {
     "extends": "react-app",
     "rules": {
-      "semi": ["error", "always"]
+      "semi": [
+        "error",
+        "always"
+      ]
     }
   }
 }
