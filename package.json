@@ -8,7 +8,8 @@
   "license": "(MIT OR Apache-2.0)",
   "engines": {
     "node": "8.11.2",
-    "npm": "6.1.0"
+    "npm": "6.1.0",
+    "yarn": "1.7.0"
   },
   "dependencies": {
     "autoprefixer": "6.5.1",
