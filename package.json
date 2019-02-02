@@ -1,8 +1,9 @@
 {
   "name": "veganbeer",
   "version": "0.1.0",
+  "license": "(MIT OR Apache-2.0)",
   "engines": {
-    "node": "6.11.2"
+    "node": "8.11.1"
   },
   "dependencies": {
     "autoprefixer": "6.5.1",
