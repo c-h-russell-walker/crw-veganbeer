@@ -12,7 +12,7 @@ describe('DateRetrieved', () => {
   );
 
   it('should have a prop with the timestamp', () => {
-    expect(component.props).toMatchObject({retrievedTimestamp: 1498449600000});
+    expect(component.props).toMatchObject({retrievedTimestamp: 1498431600000});
   });
 
   it('should have working date format functions', () => {
