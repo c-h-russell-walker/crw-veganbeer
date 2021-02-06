@@ -1,6 +1,11 @@
 {
   "name": "veganbeer",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/c-h-russell-walker/crw-veganbeer"
+  },
+  "license": "(MIT OR Apache-2.0)",
   "engines": {
     "node": "6.11.2"
   },
@@ -32,7 +37,6 @@
     "fs-extra": "0.30.0",
     "gzip-size": "3.0.0",
     "html-webpack-plugin": "2.24.0",
-    "node-sass": "^3.10.0",
     "object.values": "^1.0.4",
     "postcss-loader": "1.0.0",
     "react": "^15.6.0",
@@ -57,6 +61,7 @@
     "http-proxy-middleware": "0.17.2",
     "jest": "^18.1.0",
     "json-loader": "0.5.4",
+    "node-sass": "^5.0.0",
     "object-assign": "4.1.0",
     "promise": "7.1.1",
     "react-addons-test-utils": "^15.6.0",

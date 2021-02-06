@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-Using data graciously supplied by [Barnivore](http://www.barnivore.com/).
+Using data graciously supplied by [Barnivore](https://www.barnivore.com/).
 
 ## TODO - update this README more
 

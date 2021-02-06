@@ -4,6 +4,8 @@ import fetchMock from 'fetch-mock';
 import { breweriesResponse } from './fixtures/breweriesResponse';
 import { brewerInfoResponse } from './fixtures/brewerInfoResponse';
 
+import { baseUrl } from './constants/constants';
+
 const storageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -35,6 +37,6 @@ String.prototype.padStart = padStartPolyfill;
  * Mock requests
 */
 
-fetchMock.get('http://www.barnivore.com/beer.json', breweriesResponse);
+fetchMock.get(`${baseUrl}beer.json`, breweriesResponse);
 
-fetchMock.get('http://www.barnivore.com/company/42.json', brewerInfoResponse);
+fetchMock.get(`${baseUrl}company/42.json`, brewerInfoResponse);

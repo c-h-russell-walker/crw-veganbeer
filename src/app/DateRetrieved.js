@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { currentTimestamp } from '../helpers/currentTimestamp';
+import { baseUrl } from '../constants/constants';
 
 class DateRetrieved extends Component {
   render() {
@@ -8,7 +9,7 @@ class DateRetrieved extends Component {
     let date = new Date(timestamp);
     return (
       <div>
-        Generated with <a target="_blank" href="http://www.barnivore.com">Barnivore</a> data from
+        Generated with <a target="_blank" href={baseUrl}>Barnivore</a> data from
         &nbsp;<time id="date-retrieved-time" dateTime={this.formattedDateTime(date)}>{this.retrievedDate(date)}</time>
       </div>
     );
