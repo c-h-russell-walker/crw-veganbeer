@@ -1,20 +1,20 @@
-import { autobind } from 'core-decorators';
+import { autobind } from "core-decorators";
 
-import { ignoreStringPrefix } from '../helpers/ignoreStringPrefix';
+import { ignoreStringPrefix } from "../helpers/ignoreStringPrefix";
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Pagination from './Pagination';
+import Pagination from "./Pagination";
 
 class Paginator extends Component {
   constructor() {
     super();
     this.state = {
-      pages: []
+      pages: [],
     };
 
-    this.digit = 'Digit';
-    this.other = 'Other';
+    this.digit = "Digit";
+    this.other = "Other";
     this.numericReg = /^\d$/;
     this.alphaReg = /^[a-zA-Z]$/;
   }
@@ -30,7 +30,7 @@ class Paginator extends Component {
       let otherFlag = false;
 
       this.props.brewers.forEach((br) => {
-        let companyInitial = ignoreStringPrefix(br.company_name, 'The ')[0];
+        let companyInitial = ignoreStringPrefix(br.company_name, "The ")[0];
         if (this.alphaReg.test(companyInitial)) {
           pageSet.add(companyInitial.toUpperCase());
         } else if (!digitFlag && this.numericReg.test(companyInitial)) {
@@ -51,26 +51,24 @@ class Paginator extends Component {
       }
 
       this.setState({
-        pages: [...pageSet]
+        pages: [...pageSet],
       });
     }
   }
 
   render() {
-    return (
-      <div>
-        {this._renderPages()}
-      </div>
-    );
+    return <div>{this._renderPages()}</div>;
   }
 
   _renderPages() {
     return this.state.pages.map((page) => {
       return (
-        <Pagination page={page}
-                    key={page}
-                    current={this.props.current}
-                    callback={this._handleClick} />
+        <Pagination
+          page={page}
+          key={page}
+          current={this.props.current}
+          callback={this._handleClick}
+        />
       );
     });
   }

@@ -1,15 +1,15 @@
-import fetchMock from 'fetch-mock';
+import fetchMock from "fetch-mock";
 
 // import { singleBreweryResponse } from './fixtures/singleBreweryResponse';
-import { breweriesResponse } from './fixtures/breweriesResponse';
-import { brewerInfoResponse } from './fixtures/brewerInfoResponse';
+import { breweriesResponse } from "./fixtures/breweriesResponse";
+import { brewerInfoResponse } from "./fixtures/brewerInfoResponse";
 
-import { baseUrl } from './constants/constants';
+import { baseUrl } from "./constants/constants";
 
 const storageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
-  clear: jest.fn()
+  clear: jest.fn(),
 };
 global.localStorage = storageMock;
 global.sessionStorage = storageMock;
@@ -18,7 +18,7 @@ global.sessionStorage = storageMock;
 function padStartPolyfill(targetLength, padString) {
   // Floor if number or convert non-number to 0
   targetLength = targetLength >> 0;
-  padString = String(padString || ' ');
+  padString = String(padString || " ");
   if (this.length > targetLength) {
     return String(this);
   } else {
@@ -29,13 +29,13 @@ function padStartPolyfill(targetLength, padString) {
     }
     return padString.slice(0, targetLength) + String(this);
   }
-};
+}
 
 String.prototype.padStart = padStartPolyfill;
 
 /*
  * Mock requests
-*/
+ */
 
 fetchMock.get(`${baseUrl}beer.json`, breweriesResponse);
 

@@ -1,20 +1,24 @@
-import { autobind } from 'core-decorators';
+import { autobind } from "core-decorators";
 
-import { preventDefault } from '../decorators/decorators';
+import { preventDefault } from "../decorators/decorators";
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Button extends Component {
   render() {
     let opts = {};
     if (this.props.disabled) {
-      opts['disabled'] = 'disabled';
+      opts["disabled"] = "disabled";
     }
     return (
-      <button className="button"
-              onClick={this._handleClick}
-              {...opts}
-              type="button">{this.props.displayText}</button>
+      <button
+        className="button"
+        onClick={this._handleClick}
+        {...opts}
+        type="button"
+      >
+        {this.props.displayText}
+      </button>
     );
   }
 

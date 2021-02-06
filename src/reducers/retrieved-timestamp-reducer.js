@@ -1,10 +1,11 @@
-import * as types from '../actions/action-types';
+import * as types from "../actions/action-types";
 
-import { currentTimestamp } from '../helpers/currentTimestamp';
+import { currentTimestamp } from "../helpers/currentTimestamp";
 
-const initialTimestamp = self.localStorage.getItem('retrievedTimestamp') || currentTimestamp();
+const initialTimestamp =
+  self.localStorage.getItem("retrievedTimestamp") || currentTimestamp();
 
-export default (state=initialTimestamp, action) => {
+export default (state = initialTimestamp, action) => {
   switch (action.type) {
     case types.UPDATE_TIME_RETRIEVED:
       return action.retrievedTimestamp;

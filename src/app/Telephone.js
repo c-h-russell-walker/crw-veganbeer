@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Telephone extends Component {
   render() {
     return (
-      <a className="tel-link" href={this._renderPhoneHref()}>{this.props.phone}</a>
+      <a className="tel-link" href={this._renderPhoneHref()}>
+        {this.props.phone}
+      </a>
     );
   }
 
@@ -12,7 +14,7 @@ class Telephone extends Component {
   }
 
   _stripNonNumeric() {
-    return this.props.phone && this.props.phone.replace(/\D/g,'');
+    return this.props.phone && this.props.phone.replace(/\D/g, "");
   }
 }
 

@@ -1,34 +1,38 @@
-import React, {Component} from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-import * as dateRetrievedActions from '../actions/date-retrieved-actions';
-import * as currentPageActions from '../actions/current-page-actions';
+import * as dateRetrievedActions from "../actions/date-retrieved-actions";
+import * as currentPageActions from "../actions/current-page-actions";
 
-import '../App.scss';
+import "../App.scss";
 
-import DateRetrieved from './DateRetrieved';
-import Brewers from './Brewers';
-
+import DateRetrieved from "./DateRetrieved";
+import Brewers from "./Brewers";
 
 class App extends Component {
-
   refreshData = () => {
     this.brewers.refreshData();
-  }
+  };
 
   render() {
     return (
       <div id="app">
         <div className="app-header">
           <h2>Welcome to VeganBeer</h2>
-          <button id="refresh-button"
-                  className="button"
-                  onClick={this.refreshData}>Refresh Data</button>
+          <button
+            id="refresh-button"
+            className="button"
+            onClick={this.refreshData}
+          >
+            Refresh Data
+          </button>
           <DateRetrieved retrievedTimestamp={this.props.retrievedTimestamp} />
         </div>
         <Brewers
-          ref={instance => { this.brewers = instance; }}
+          ref={(instance) => {
+            this.brewers = instance;
+          }}
           retrievedTimestamp={this.props.retrievedTimestamp}
           updateDateRetrieved={this.props.actions.updateDateRetrieved}
           currentPage={this.props.currentPage}
@@ -54,9 +58,8 @@ function mapDispatchToProps(dispatch) {
         ...currentPageActions,
       },
       dispatch
-    )
+    ),
   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-

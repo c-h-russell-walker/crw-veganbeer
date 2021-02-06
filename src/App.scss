@@ -1,4 +1,4 @@
-$react-blue: #61DAFB;
+$react-blue: #61dafb;
 $green: green;
 $red: red;
 $yellow: gold; // #FFD700
@@ -6,9 +6,9 @@ $thatLittleBit: 1.2em;
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-      -ms-border-radius: $radius;
-          border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
 }
 
 .button {
@@ -16,7 +16,7 @@ $thatLittleBit: 1.2em;
   margin: $thatLittleBit;
   padding: 0.6em;
   font-size: 0.8em;
-  background-color: #DDD;
+  background-color: #ddd;
   @include border-radius(0.4em);
   &:disabled {
     cursor: default;
@@ -74,7 +74,6 @@ $thatLittleBit: 1.2em;
   }
 
   .brewery {
-
     // This is for product and brewery
     .status {
       font-style: italic;
@@ -118,7 +117,7 @@ $thatLittleBit: 1.2em;
   }
 
   .circle:before {
-    content: ' \25CF';
+    content: " \25CF";
     font-size: 1.25em;
   }
 
@@ -144,8 +143,12 @@ $thatLittleBit: 1.2em;
   }
 
   @keyframes app-logo-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .loading {
@@ -172,5 +175,4 @@ $thatLittleBit: 1.2em;
       width: 1.25em;
     }
   }
-
 }

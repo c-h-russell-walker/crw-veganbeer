@@ -1,25 +1,25 @@
-import { autobind } from 'core-decorators';
-import React, { Component } from 'react';
+import { autobind } from "core-decorators";
+import React, { Component } from "react";
 
-import { baseUrl } from '../constants/constants';
+import { baseUrl } from "../constants/constants";
 
-import Product from './Product';
-import BrewerContact from './BrewerContact';
+import Product from "./Product";
+import BrewerContact from "./BrewerContact";
 
 class BrewerInfo extends Component {
   constructor() {
     super();
     this.state = {
       brewerInfo: {},
-      products: []
+      products: [],
     };
   }
 
   render() {
     return (
       <div className="brewer-info">
-        <div className={(this.state.products.length ? 'hidden' : '')}>
-          <p className='loading'>Loading</p>
+        <div className={this.state.products.length ? "hidden" : ""}>
+          <p className="loading">Loading</p>
         </div>
         <BrewerContact brewerInfo={this.state.brewerInfo} />
         <p className="brewer-notes">{this.state.brewerInfo.notes}</p>
@@ -33,13 +33,15 @@ class BrewerInfo extends Component {
   }
 
   _renderProducts() {
-    return this.state.products.map(function(product) {
+    return this.state.products.map(function (product) {
       return <Product key={product.id} product={product} />;
     });
   }
 
   componentDidMount() {
-    let companyData = self.localStorage.getItem(`brewerInfo${this.props.brewerId}`);
+    let companyData = self.localStorage.getItem(
+      `brewerInfo${this.props.brewerId}`
+    );
     if (companyData) {
       let company = JSON.parse(companyData);
       this._setBrewerData(company, company.products);
@@ -52,13 +54,15 @@ class BrewerInfo extends Component {
   @autobind
   _fetchBrewerInfo() {
     // TODO - make a reusable abstraction to also use with the other main `fetch()`
-    fetch(this._infoLink())
-      .then(this._handleFetchBrewerInfo, this._handleFetchError);
+    fetch(this._infoLink()).then(
+      this._handleFetchBrewerInfo,
+      this._handleFetchError
+    );
   }
 
   @autobind
   _handleFetchBrewerInfo(response) {
-    response.json().then(response => {
+    response.json().then((response) => {
       const company = response.company;
       this._setBrewerData(company, company.products);
       this._storeBrewerData(company.id, company);
@@ -68,12 +72,15 @@ class BrewerInfo extends Component {
   _setBrewerData(brewerInfo, products) {
     this.setState({
       brewerInfo,
-      products
+      products,
     });
   }
 
   _storeBrewerData(companyId, company) {
-    self.localStorage.setItem(`brewerInfo${companyId}`, JSON.stringify(company));
+    self.localStorage.setItem(
+      `brewerInfo${companyId}`,
+      JSON.stringify(company)
+    );
   }
 
   _handleFetchError(error) {
