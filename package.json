@@ -63,7 +63,7 @@
     "http-proxy-middleware": "0.17.2",
     "jest": "^18.1.0",
     "json-loader": "0.5.4",
-    "node-sass": "^5.0.0",
+    "node-sass": "^4.13.1",
     "object-assign": "4.1.0",
     "promise": "7.1.1",
     "react-addons-test-utils": "^15.6.2",
