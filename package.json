@@ -42,7 +42,7 @@
     "object.values": "^1.0.4",
     "postcss-loader": "1.0.0",
     "react": "^15.6.2",
-    "react-dev-utils": "^0.4.2",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^15.6.2",
     "react-redux": "^5.0.7",
     "recursive-readdir": "2.1.0",
